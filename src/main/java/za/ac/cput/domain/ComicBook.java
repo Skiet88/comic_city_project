@@ -17,15 +17,14 @@ public class ComicBook {
     private String name;
     private double wieght;
     private LocalDate releaseDate;
-
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    private List<Author> authors = new ArrayList<>();
+    private List<Author> authors ;
 
-    @ManyToMany(mappedBy = "comicBookList", fetch = FetchType.EAGER)
-    private List<Cart> carts = new ArrayList<>();
+//    @ManyToMany(mappedBy = "comicBookList", fetch = FetchType.EAGER)
+//    private List<Cart> carts = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "comicBooks", fetch = FetchType.EAGER)
-    private List<WishList> wishLists = new ArrayList<>();
+//    @ManyToMany(mappedBy="comicBooks", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
+//    private List<WishList> wishLists = new ArrayList<>();
 
     private double price;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
@@ -74,18 +73,18 @@ public class ComicBook {
         return price;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ComicBook comicBook = (ComicBook) o;
-        return Double.compare(wieght, comicBook.wieght) == 0 && Double.compare(price, comicBook.price) == 0 && Objects.equals(SKU, comicBook.SKU) && Objects.equals(name, comicBook.name) && Objects.equals(releaseDate, comicBook.releaseDate) && Objects.equals(authors, comicBook.authors) && Objects.equals(carts, comicBook.carts) && Objects.equals(wishLists, comicBook.wishLists) && Objects.equals(publishers, comicBook.publishers);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(SKU, name, wieght, releaseDate, authors, carts, wishLists, price, publishers);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        ComicBook comicBook = (ComicBook) o;
+//        return Double.compare(wieght, comicBook.wieght) == 0 && Double.compare(price, comicBook.price) == 0 && Objects.equals(SKU, comicBook.SKU) && Objects.equals(name, comicBook.name) && Objects.equals(releaseDate, comicBook.releaseDate) && Objects.equals(authors, comicBook.authors) && Objects.equals(carts, comicBook.carts) && Objects.equals(wishLists, comicBook.wishLists) && Objects.equals(publishers, comicBook.publishers);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(SKU, name, wieght, releaseDate, authors, carts, wishLists, price, publishers);
+//    }
 
     @Override
     public String toString() {
@@ -95,8 +94,8 @@ public class ComicBook {
                 ", wieght=" + wieght +
                 ", releaseDate=" + releaseDate +
                 ", authors=" + authors +
-                ", carts=" + carts +
-                ", wishLists=" + wishLists +
+               // ", carts=" + carts +
+                //", wishLists=" + wishLists +
                 ", price=" + price +
                 ", publishers=" + publishers +
                 '}';

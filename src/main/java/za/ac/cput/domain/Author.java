@@ -38,7 +38,7 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Domain.Author{" +
+        return "Author{" +
                 "authorID=" + authorID +
                 ", name=" + name +
                 '}';

@@ -45,10 +45,10 @@ class ComicBookServiceTest {
 
 
         author1 = AuthorFactory.buildAuthor(001, "Lamark", "Principle", "Darwin");
-        authorService.create(author1);
+        //authorService.create(author1);
 
         author2 = AuthorFactory.buildAuthor(002, "Jacob", "Gedleyihlekisa", "Zuma");
-        authorService.create(author2);
+       // authorService.create(author2);
 
 
         authors = new ArrayList<>();

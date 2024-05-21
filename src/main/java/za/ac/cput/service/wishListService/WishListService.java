@@ -33,7 +33,7 @@ public class WishListService implements IWishListService{
     @Override
     public boolean delete(Long wishListId) {
         wishListRepository.deleteById(wishListId);
-    return wishListRepository.existsById(wishListId);
+    return  !wishListRepository.existsById(wishListId);
     }
 
     @Override

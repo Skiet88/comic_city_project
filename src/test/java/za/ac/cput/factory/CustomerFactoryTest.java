@@ -52,7 +52,7 @@ class CustomerFactoryTest {
         cart1 = CartFactory.buildCart(600.00,comicBookList, LocalDate.of(2024,02,15),LocalDate.now());
         cart2=CartFactory.buildCart(600,comicBookList,LocalDate.of(2025,04,20),LocalDate.of(2024,05,01));
 
-        wishList1 = WishListFactory.buildWishList("myWishList1", comicBookList, LocalDate.of(2024, 02, 14), LocalDate.of(2024, 02, 15));
+        wishList1 = WishListFactory.buildWishList(001, "myWishList1", comicBookList, LocalDate.of(2024, 02, 14), LocalDate.of(2024, 02, 15));
 
         customer1 = CustomerFactory.buildCustomer(1234, "Mbasa", "Cabane",
                 ContactFactory.buildContact("mbasac@gmail.com", "0741236547", "0213456789"),

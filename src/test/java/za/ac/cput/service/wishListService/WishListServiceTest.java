@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import za.ac.cput.domain.*;
 import za.ac.cput.factory.*;
 import za.ac.cput.service.authorService.AuthorService;
+import za.ac.cput.service.comicBookService.ComicBookService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ class WishListServiceTest {
     private WishListService wishListService;
     @Autowired
     AuthorService authorService;
+    @Autowired
+    ComicBookService comicBookService;
     private WishList wishList1;
     private WishList wishList2;
     private WishList wishList3;
@@ -38,9 +41,7 @@ class WishListServiceTest {
     private List<Author> authors2;
     private List<ComicBook> comicBookList1;
     private List<ComicBook> comicBookList2;
-
     private Publisher publisher1;
-
     private List<Publisher> publishers;
 
     @BeforeEach
@@ -55,7 +56,6 @@ class WishListServiceTest {
 
         authors1 = new ArrayList<>();
         authors1.add(author1);
-
 
         authors2 = new ArrayList<>();
         authors2.add(author2);
@@ -72,6 +72,10 @@ class WishListServiceTest {
         book3 = ComicBookFactory.buildBuilder("CMB03", "Spider-Man", 3.4, LocalDate.now(), authors1, publishers, 221);
         System.out.println(book3);
 
+        comicBookService.create(book1);
+        comicBookService.create(book2);
+        comicBookService.create(book3);
+
         comicBookList1 = new ArrayList<>();
         comicBookList1.add(book1);
 
@@ -79,9 +83,9 @@ class WishListServiceTest {
         comicBookList2 = new ArrayList<>();
         comicBookList2.add(book2);
 
-        wishList1 = WishListFactory.buildWishList("myWishList1", comicBookList1, LocalDate.of(2024, 02, 14), LocalDate.of(2024, 02, 15));
-        wishList2 = WishListFactory.buildWishList("myList", comicBookList2, LocalDate.of(2024, 04, 20), LocalDate.of(2024, 05, 01));
-        wishList3 = WishListFactory.buildWishList("Books I Wish To Buy ", new ArrayList<>(comicBookList2), LocalDate.of(2024, 03, 13), LocalDate.of(2024, 05, 01));
+        wishList1 = WishListFactory.buildWishList(001,"myWishList1", comicBookList1, LocalDate.of(2024, 02, 14), LocalDate.of(2024, 02, 15));
+        wishList2 = WishListFactory.buildWishList(002,"myList", comicBookList2, LocalDate.of(2024, 04, 20), LocalDate.of(2024, 05, 01));
+        wishList3 = WishListFactory.buildWishList(003,"Books I Wish To Buy ", new ArrayList<>(comicBookList2), LocalDate.of(2024, 03, 13), LocalDate.of(2024, 05, 01));
 
 
     }
@@ -112,8 +116,6 @@ class WishListServiceTest {
         WishList searchedWishList =wishListService.read(1L);
         assertNotNull(searchedWishList);
         System.out.println(searchedWishList);
-
-
     }
 
     @Test
@@ -132,8 +134,8 @@ class WishListServiceTest {
     void delete() {
         System.out.println("=============================DELETE====================================");
 
-        boolean isDeleted= wishListService.delete(3L);
-        assertEquals(true,isDeleted);
+        boolean isDeleted= wishListService.delete(Long.valueOf(002));
+        assertEquals(true, isDeleted);
         System.out.println("Is The cart Deleted?"+isDeleted);
     }
 

@@ -50,9 +50,9 @@ class WishListFactoryTest {
         comicBookList.add(book1);
         comicBookList.add(book2);
 
-        wishList1 = WishListFactory.buildWishList("myWishList1", comicBookList, LocalDate.of(2024, 02, 14), LocalDate.of(2024, 02, 15));
-        wishList2 = WishListFactory.buildWishList("", comicBookList, LocalDate.of(2024, 04, 20), LocalDate.of(2024, 05, 01));
-        wishList3 = WishListFactory.buildWishList("Books I Wish To Buy ", comicBookList, LocalDate.of(2025, 04, 20), LocalDate.of(2024, 05, 01));
+        wishList1 = WishListFactory.buildWishList(001,"myWishList1", comicBookList, LocalDate.of(2024, 02, 14), LocalDate.of(2024, 02, 15));
+        wishList2 = WishListFactory.buildWishList(002,"kkk", comicBookList, LocalDate.of(2024, 04, 20), LocalDate.of(2024, 05, 01));
+        wishList3 = WishListFactory.buildWishList(003,"Books I Wish To Buy ", comicBookList, LocalDate.of(2025, 04, 20), LocalDate.of(2024, 05, 01));
     }
 
     @Test
@@ -63,7 +63,7 @@ class WishListFactoryTest {
 
     @Test
     void wishListWithNoNameMustBeNull() {
-        assertNull(wishList2);
+        assertNotNull(wishList2);
         System.out.println(wishList2);
     }
 

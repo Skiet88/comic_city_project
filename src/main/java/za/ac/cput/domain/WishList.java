@@ -14,7 +14,7 @@ import java.util.Objects;
 @Entity
 public class WishList{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long wishListId;
     private String wishlistName;
 
@@ -27,13 +27,14 @@ public class WishList{
 
 
 
-    @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "wishList_comicbook",
             joinColumns = @JoinColumn(name = "wishList_id"),
             inverseJoinColumns = @JoinColumn(name = "comic_book_id")
     )
     private List<ComicBook> comicBooks;
+
     private LocalDate createdDate;
     private LocalDate updatedDate;
 
@@ -85,7 +86,7 @@ public class WishList{
 
     @Override
     public String toString() {
-        return "Wishlist{" +
+        return "WishList{" +
                 "wishListId=" + wishListId +
                 ", wishlistName='" + wishlistName + '\'' +
                 ", comicBooks=" + comicBooks +
