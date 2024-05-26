@@ -24,6 +24,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class ComicBookServiceTest {
     @Autowired
     private ComicBookService comicBookService;
+    @Autowired
+    private AuthorService authorService;
 
     private ComicBook book1;
     private Author author1;
@@ -39,19 +41,15 @@ class ComicBookServiceTest {
     @BeforeEach
     void setUp() {
         System.out.println("=============================SET-UP====================================");
-
-
-
         author1 = AuthorFactory.buildAuthor(001, "Lamark", "Principle", "Darwin");
-
-
+        authorService.create(author1);
         author2 = AuthorFactory.buildAuthor(002, "Jacob", "Gedleyihlekisa", "Zuma");
-
-
-
+        authorService.create(author2);
         authors = new ArrayList<>();
         authors.add(author1);
         //authors.add(author2);
+
+
 
         publisher1 = PublisherFactory.buildPublisher(34655, "Marvel",2000);
 
@@ -111,6 +109,7 @@ class ComicBookServiceTest {
     @Test
 
     @Order(4)
+
     void delete() {
         System.out.println("=============================DELETE====================================");
         boolean isDeleted = comicBookService.delete(book3.getSKU());

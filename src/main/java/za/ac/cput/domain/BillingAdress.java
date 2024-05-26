@@ -1,10 +1,13 @@
 
-//Joshua Mokwebo
-//Student No 222191562
-//GitHubRepository:My_commic_city_projec
 
-
+//
+////Joshua Mokwebo
+////Student No 222191562
+////GitHubRepository:My_commic_city_projec
+//
+//
 package za.ac.cput.domain;
+import za.ac.cput.domain.Address;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -14,7 +17,7 @@ import java.util.Objects;
 
 @Entity
 @DiscriminatorValue("BillingAddress_type")
-public class BillingAdress extends Address{
+public class BillingAdress extends Address {
 
     private static final Address.AddressBuilder AddressBuilder = new AddressBuilder() ;
     private String paymentMethod;
@@ -106,16 +109,16 @@ public class BillingAdress extends Address{
 
 
 
-        public BillingAdressBuilder copy (BillingAdress  o){
-            this.street = o.street;
-            this.suburb = o.suburb;
-            this.postalCode = o.postalCode;
-            this.city = o.city;
-            this.paymentMethod = o.paymentMethod;
-            this.invoiceNotes = o.invoiceNotes;
-            return this;
-
-        }
+//        public BillingAdressBuilder copy (BillingAdress  o){
+//            this.street = o.street;
+//            this.suburb = o.suburb;
+//            this.postalCode = o.postalCode;
+//            this.city = o.city;
+//            this.paymentMethod = o.paymentMethod;
+//            this.invoiceNotes = o.invoiceNotes;
+//            return this;
+//
+//        }
 
         public BillingAdress build (){return new BillingAdress(this);}
 

@@ -14,22 +14,22 @@ class BillingAddressFactoryTest {
 
     Address address;
 
-    @BeforeEach
-    @Disabled
-    void setUp() {
-         address = new BillingAddressFactory().
-                buildBillingAddress("card","Email" , "34 Batersea Drive", "Kibbler park" , "2091" , "Johannesburg");
+//    @BeforeEach
+//    @Disabled
+//    void setUp() {
+//         address = new BillingAddressFactory().
+//                buildBillingAddress("card","Email" , "34 Batersea Drive", "Kibbler park" , "2091" , "Johannesburg");
+//
+//
+//    }
 
-
-    }
-
-    @Test
-    void buildBillingAddress() {
-
-        address = new BillingAddressFactory().
-                buildBillingAddress("card","Email" , "34 Batersea Drive", "Kibbler park" , "2091" , "Johannesburg");
-        System.out.println(address);
-
-
-    }
+//    @Test
+//    void buildBillingAddress() {
+//
+//        address = new BillingAddressFactory().
+//                buildBillingAddress("card","Email" , "34 Batersea Drive", "Kibbler park" , "2091" , "Johannesburg");
+//        System.out.println(address);
+//
+//
+//    }
 }

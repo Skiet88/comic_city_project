@@ -30,7 +30,8 @@ class WishListServiceTest {
 
     @Autowired
     private WishListService wishListService;
-
+    @Autowired
+    AuthorService authorService;
 
     private WishList wishList1;
     private WishList wishList2;

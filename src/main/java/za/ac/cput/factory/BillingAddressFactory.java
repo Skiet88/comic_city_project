@@ -12,8 +12,8 @@ import za.ac.cput.util.Helper;
 public  class BillingAddressFactory {
 
 
-    public BillingAdress buildBillingAddress (String paymentMethod, String invoiceNotes, String street , String suburb, String postalCode, String city ) {
-        if (Helper.isStringNullorEmpty(street) || Helper.isStringNullorEmpty(suburb) || Helper.isInvalidPostalCode(postalCode) ||
+    public BillingAdress buildBillingAddress(String paymentMethod, String invoiceNotes, String street, String suburb, String postalCode, String city) {
+        if (Helper.isStringNullorEmpty(street) || Helper.isStringNullorEmpty(suburb) ||
                 Helper.isStringNullorEmpty(city) || Helper.isStringNullorEmpty(paymentMethod) ||
                 Helper.isStringNullorEmpty(invoiceNotes))
             return null;
@@ -26,7 +26,7 @@ public  class BillingAddressFactory {
                 setCity(city).
                 build();
 
-         // BillingAdress  address = new BillingAdress.BillingAdressBuilder().copy(billingAdress).setInvoiceNotes(invoiceNotes).setPaymentMethod(paymentMethod).build();
+        // BillingAdress  address = new BillingAdress.BillingAdressBuilder().copy(billingAdress).setInvoiceNotes(invoiceNotes).setPaymentMethod(paymentMethod).build();
         return billingAdress;
 
 

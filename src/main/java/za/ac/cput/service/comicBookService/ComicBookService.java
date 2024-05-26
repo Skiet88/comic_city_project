@@ -20,9 +20,7 @@ public class ComicBookService implements IComicBookService{
     @Override
     public ComicBook create(ComicBook comicBook) {
 
-    authorRepository.saveAll(comicBook.getAuthor());
-
-
+   // authorRepository.saveAll(comicBook.getAuthor());
         return repo.save(comicBook);
     }
 

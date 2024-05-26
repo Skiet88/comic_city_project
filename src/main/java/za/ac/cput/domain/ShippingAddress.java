@@ -103,16 +103,16 @@ public class ShippingAddress extends Address{
         }
 
 
-        public ShippingAddressBuilder copy (ShippingAddress o){
-            this.street = o.street;
-            this.suburb = o.suburb;
-            this.postalCode = o.postalCode;
-            this.city = o.city;
-            this.preffered_delivery_time = o.preffered_delivery_time;
-            this.signature_required = o.signature_required;
-            return this;
-
-        }
+//        public ShippingAddressBuilder copy (ShippingAddress o){
+//            this.street = o.street;
+//            this.suburb = o.suburb;
+//            this.postalCode = o.postalCode;
+//            this.city = o.city;
+//            this.preffered_delivery_time = o.preffered_delivery_time;
+//            this.signature_required = o.signature_required;
+//            return this;
+//
+//        }
 
         public ShippingAddress build (){return new ShippingAddress(this);}
 

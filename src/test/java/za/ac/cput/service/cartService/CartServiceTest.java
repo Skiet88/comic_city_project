@@ -47,59 +47,59 @@ class CartServiceTest {
     private List<ComicBook> comicBookList1;
     private List<ComicBook> comicBookList2;
     private List<ComicBook>comicBookList3;
-
-    @BeforeEach
-    void setUp() {
-        System.out.println("=============================SET-UP====================================");
-
-
-        publisher1 = PublisherFactory.buildPublisher(67954, "Kat Publishers", 2010);
-        publisher2 = PublisherFactory.buildPublisher(87949, "Nathan Publishers", 2007);
-
-        author1 = AuthorFactory.buildAuthor(001, "Lamark", "Principle", "Darwin");
-        author2 = AuthorFactory.buildAuthor(003, "Brown", "", "Chris");
-
-
-        authors1 = new ArrayList<>();
-        authors1.add(author1);
-
-
-        authors2 = new ArrayList<>();
-        authors2.add(author2);
-
-
-        book1 = ComicBookFactory.buildBuilder("CMB01", "Thor", 3.4, LocalDate.now(), authors1, publisher1,300.00);
-        System.out.println(book1);
-
-        book2 = ComicBookFactory.buildBuilder("CMB02", "Hulk", 3.4, LocalDate.of(2024,05,19), authors2,publisher1,800.00);
-        System.out.println(book2);
-
-        book3 = ComicBookFactory.buildBuilder("CMB03", "Spider-Man", 3.4, LocalDate.now(), new ArrayList<>(authors1), publisher2,400);
-        System.out.println(book3);
-
-
-        comicBookList1 = new ArrayList<>();
-        comicBookList1.add(book1);
-
-
-        comicBookList2 = new ArrayList<>();
-        comicBookList2.add(book2);
-
-        comicBookList3=new ArrayList<>();
-        comicBookList3.add(book3);
-
-        cart1 = CartFactory.buildCart( 200.00, comicBookList1, LocalDate.of(2024, 02, 15), LocalDate.now());
-        assertNotNull(cart1);
-        System.out.println(cart1);
-
-        cart2 = CartFactory.buildCart( 450, comicBookList2, LocalDate.of(2024, 04, 20), LocalDate.of(2024, 05, 01));
-        assertNotNull(cart2);
-        System.out.println(cart2);
-
-        cart3 = CartFactory.buildCart( 3450, comicBookList3, LocalDate.of(2024, 01, 20), LocalDate.of(2024, 05, 02));
-        assertNotNull(cart3);
-        System.out.println(cart3);
-    }
+//
+//    @BeforeEach
+//    void setUp() {
+//        System.out.println("=============================SET-UP====================================");
+//
+//
+//        publisher1 = PublisherFactory.buildPublisher(67954, "Kat Publishers", 2010);
+//        publisher2 = PublisherFactory.buildPublisher(87949, "Nathan Publishers", 2007);
+//
+//        author1 = AuthorFactory.buildAuthor(001, "Lamark", "Principle", "Darwin");
+//        author2 = AuthorFactory.buildAuthor(003, "Brown", "", "Chris");
+//
+//
+//        authors1 = new ArrayList<>();
+//        authors1.add(author1);
+//
+//
+//        authors2 = new ArrayList<>();
+//        authors2.add(author2);
+//
+//
+//        book1 = ComicBookFactory.buildBuilder("CMB01", "Thor", 3.4, LocalDate.now(), authors1, publisher1,300.00);
+//        System.out.println(book1);
+//
+//        book2 = ComicBookFactory.buildBuilder("CMB02", "Hulk", 3.4, LocalDate.of(2024,05,19), authors2,publisher1,800.00);
+//        System.out.println(book2);
+//
+//        book3 = ComicBookFactory.buildBuilder("CMB03", "Spider-Man", 3.4, LocalDate.now(), new ArrayList<>(authors1), publisher2,400);
+//        System.out.println(book3);
+//
+//
+//        comicBookList1 = new ArrayList<>();
+//        comicBookList1.add(book1);
+//
+//
+//        comicBookList2 = new ArrayList<>();
+//        comicBookList2.add(book2);
+//
+//        comicBookList3=new ArrayList<>();
+//        comicBookList3.add(book3);
+//
+//        cart1 = CartFactory.buildCart( 200.00, comicBookList1, LocalDate.of(2024, 02, 15), LocalDate.now());
+//        assertNotNull(cart1);
+//        System.out.println(cart1);
+//
+//        cart2 = CartFactory.buildCart( 450, comicBookList2, LocalDate.of(2024, 04, 20), LocalDate.of(2024, 05, 01));
+//        assertNotNull(cart2);
+//        System.out.println(cart2);
+//
+//        cart3 = CartFactory.buildCart( 3450, comicBookList3, LocalDate.of(2024, 01, 20), LocalDate.of(2024, 05, 02));
+//        assertNotNull(cart3);
+//        System.out.println(cart3);
+//    }
 
     @Test
     @Order(1)

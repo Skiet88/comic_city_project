@@ -3,6 +3,7 @@ package za.ac.cput.domain;
 // 221164014
 // https://github.com/Skiet88/comic__city_project
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Entity
+
 public class ComicBook {
     @Id
     private String SKU;
@@ -19,16 +21,20 @@ public class ComicBook {
     private double wieght;
     private LocalDate releaseDate;
 
+    @JsonProperty
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private List<Author> authors = new ArrayList<>();
 
+    @JsonProperty
     @ManyToMany(mappedBy = "comicBookList", fetch = FetchType.EAGER)
     private List<Cart> carts = new ArrayList<>();
 
+    @JsonProperty
     @ManyToMany(mappedBy = "comicBooks", fetch = FetchType.EAGER)
     private List<WishList> wishLists = new ArrayList<>();
 
     private double price;
+    @JsonProperty
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.EAGER)
     private Publisher publisher;
 
@@ -98,7 +104,7 @@ public class ComicBook {
                 ", releaseDate=" + releaseDate +
                 ", authors=[" + authorNames + "]" +
                 ", price=" + price +
-                ", publisher=" + publisher.getName() +
+                ", publisher=" + (publisher != null ? publisher.getName() : "No Publisher") +
                 '}';
     }
 

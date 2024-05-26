@@ -6,29 +6,29 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 @Entity
-public class Order {
+public class OrderForm {
     @Id
     private String orderId;
     private LocalDate orderDate;
     @ManyToOne(cascade = CascadeType.ALL)
-    private Customer user;
+    private Customer userr;
 
-    @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "order_comicbook",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "comic_book_id")
-    )
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "order_comicbook",
+//            joinColumns = @JoinColumn(name = "order_id"),
+//            inverseJoinColumns = @JoinColumn(name = "comic_book_id")
+//    )
     private List<ComicBook> comicBooks;
     private double totalAmount;
 
-    protected Order() {
+    protected OrderForm() {
     }
 
-    private Order(OrderBuilder builder) {
+    private OrderForm(OrderBuilder builder) {
         this.orderId = builder.orderId;
         this.orderDate = builder.orderDate;
-        this.user = builder.user;
+        this.userr = builder.userr;
         this.comicBooks = builder.comicBooks;
         this.totalAmount = builder.totalAmount;
     }
@@ -41,8 +41,8 @@ public class Order {
         return orderDate;
     }
 
-    public Customer getUser() {
-        return user;
+    public Customer getuserr() {
+        return userr;
     }
 
     public List<ComicBook> getComicBooks() {
@@ -57,17 +57,17 @@ public class Order {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
-        return Double.compare(order.totalAmount, totalAmount) == 0 &&
-                Objects.equals(orderId, order.orderId) &&
-                Objects.equals(orderDate, order.orderDate) &&
-                Objects.equals(user, order.user) &&
-                Objects.equals(comicBooks, order.comicBooks);
+        OrderForm orderForm = (OrderForm) o;
+        return Double.compare(orderForm.totalAmount, totalAmount) == 0 &&
+                Objects.equals(orderId, orderForm.orderId) &&
+                Objects.equals(orderDate, orderForm.orderDate) &&
+                Objects.equals(userr, orderForm.userr) &&
+                Objects.equals(comicBooks, orderForm.comicBooks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, orderDate, user, comicBooks, totalAmount);
+        return Objects.hash(orderId, orderDate, userr, comicBooks, totalAmount);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class Order {
         return "Order{" +
                 "orderId='" + orderId + '\'' +
                 ", orderDate=" + orderDate +
-                ", user=" + user +
+                ", userr=" + userr +
                 ", comicBooks=" + comicBooks +
                 ", totalAmount=" + totalAmount +
                 '}';
@@ -84,7 +84,7 @@ public class Order {
     public static class OrderBuilder {
         private String orderId;
         private LocalDate orderDate;
-        private Customer user;
+        private Customer userr;
         private List<ComicBook> comicBooks;
         private double totalAmount;
 
@@ -101,8 +101,8 @@ public class Order {
             return this;
         }
 
-        public OrderBuilder setUser(Customer user) {
-            this.user = user;
+        public OrderBuilder setuserr(Customer userr) {
+            this.userr = userr;
             return this;
         }
 
@@ -116,18 +116,18 @@ public class Order {
             return this;
         }
 
-        public OrderBuilder copy(Order order) {
-            this.orderId = order.orderId;
-            this.orderDate = order.orderDate;
-            this.user = order.user;
-            this.comicBooks = order.comicBooks;
-            this.totalAmount = order.totalAmount;
+        public OrderBuilder copy(OrderForm orderForm) {
+            this.orderId = orderForm.orderId;
+            this.orderDate = orderForm.orderDate;
+            this.userr = orderForm.userr;
+            this.comicBooks = orderForm.comicBooks;
+            this.totalAmount = orderForm.totalAmount;
 
             return this;
         }
 
-        public Order build() {
-            return new Order(this);
+        public OrderForm build() {
+            return new OrderForm(this);
         }
     }
 }
