@@ -12,7 +12,7 @@ import java.util.List;
 //@CrossOrigin(origins = "*" )
 @RestController
 @RequestMapping("/comic_book")
-
+@CrossOrigin(origins = "http://localhost:3000")
 public class ComicBookController {
     @Autowired
     private ComicBookService comicBookService;

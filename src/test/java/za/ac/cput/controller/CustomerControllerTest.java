@@ -119,4 +119,12 @@ class CustomerControllerTest {
         System.out.println("SHOW ALL:");
         System.out.println(response);
     }
+    @Test
+    @Order(6)
+    void getByEmail() {
+        String url = base_url + "/getByEmail/vxayiya@gmail.com" ;
+        System.out.println("URL: " + url);
+        ResponseEntity<Customer> response = restTemplate.getForEntity(url, Customer.class);
+        System.out.println("Response: " + response);
+    }
 }

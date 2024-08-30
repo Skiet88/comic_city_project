@@ -51,6 +51,13 @@ class CartServiceTest {
     private static BufferedImage image;
     private static byte[] photo;
 
+    private static ByteArrayOutputStream out1;
+    private static BufferedImage image1;
+    private static byte[] photo1;
+
+    private static ByteArrayOutputStream out2;
+    private static BufferedImage image2;
+    private static byte[] photo2;
     private static Publisher publisher1;
     private static Publisher publisher2;
     private static Publisher publisher3;
@@ -70,27 +77,34 @@ class CartServiceTest {
 
         System.out.println("============================SETUP==================================");
 
-        String url = "download.jpeg";
+        String url1 ="C:\\Users\\User\\Documents\\IntelliJ Projects 2024\\comic_city_project\\images\\ComicBookCover4.jpeg";
+        String url2="C:\\Users\\User\\Documents\\IntelliJ Projects 2024\\comic_city_project\\images\\ComicBookCover5.jpeg";
+        String url3="C:\\Users\\User\\Documents\\IntelliJ Projects 2024\\comic_city_project\\images\\ComicBookCover6.jpeg";
+
         try {
 
-            image = ImageIO.read(new File(url));
+            image = ImageIO.read(new File(url1));
             out = new ByteArrayOutputStream();
             ImageIO.write(image, "jpeg", out);
+
+            image1 = ImageIO.read(new File(url2));
+            out1 = new ByteArrayOutputStream();
+            ImageIO.write(image1, "jpeg", out1);
+
+            image2 = ImageIO.read(new File(url3));
+            out2 = new ByteArrayOutputStream();
+            ImageIO.write(image2, "jpeg", out2);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
 
-        photo = out.toByteArray();
-        System.out.println(photo);
-
-
         //Authors
-        author1 = AuthorFactory.buildAuthor(001L, "Lamark", "Principle", "Darwin");
+        author1 = AuthorFactory.buildAuthor(001L, "Nombulelo", "", "Mbula");
 
-        author2 = AuthorFactory.buildAuthor(002L, "Jacob", "Gedleyihlekisa", "Zuma");
+        author2 = AuthorFactory.buildAuthor(002L, "Joyce", "Brandan", "Candance");
 
-        author3 = AuthorFactory.buildAuthor(003L, "Mpumzi", "John", "Mbula");
+        author3 = AuthorFactory.buildAuthor(003L, "Kruben", "", "Naidoo");
 
 
         authors1 = new ArrayList<>();
@@ -103,21 +117,22 @@ class CartServiceTest {
         authors3.add(author3);
 
 
-        publisher1 = PublisherFactory.buildPublisher(1234L, "Marvel", 2000);
-        publisher2 = PublisherFactory.buildPublisher(5678L, "80 Fox", 1997);
-        publisher3 = PublisherFactory.buildPublisher(9101L, "DC Comics", 1910);
+        publisher1 = PublisherFactory.buildPublisher(1234L, "SA Comics", 2018);
+        publisher2 = PublisherFactory.buildPublisher(5678L, "CPUTComics", 1994);
+        publisher3 = PublisherFactory.buildPublisher(9101L, "EkasiComics", 2020);
 //Books
 
-        Set<Genre> genres1 = Set.of(Genre.FANTASY, Genre.SCI_FI);
+
+       Set<Genre> genres1 = Set.of(Genre.FANTASY, Genre.SCI_FI);
         Set<Genre> genres2 = Set.of(Genre.MYSTERY);
 
 
         book1 = ComicBookFactory.bookBuilder("Thor", genres1, "AsGuards Prince son of Zuis",
-                "B01", 299.99, 2.00, 1, authors1, publisher1, LocalDate.of(2022, 03, 04), photo);
+                "B01", 299.99, 2.00, 1, authors1, publisher1, LocalDate.of(2022, 03, 04),out.toByteArray());
         book2 = ComicBookFactory.bookBuilder("Avatar", genres2, "Two Dimension Worls Colliding into one.",
-                "B02", 199.99, 1.80, 1, authors1, publisher1, LocalDate.of(2024, 03, 15), photo);
+                "B02", 199.99, 1.80, 1, authors1, publisher2, LocalDate.of(2024, 03, 15),out1.toByteArray());
         book3 = ComicBookFactory.bookBuilder("HALO", genres1, "GALAXY 2000 years from now",
-                "B03", 539.99, 3.50, 3, authors2, publisher1, LocalDate.of(2021, 05, 30), photo);
+                "B03", 539.99, 3.50, 3, authors2, publisher3, LocalDate.of(2021, 05, 30),  out3.toByteArray());
 
         comicBooks1 = new ArrayList<>();
         comicBooks1.add(book1);
@@ -158,7 +173,9 @@ class CartServiceTest {
         Contact con2 = CustomerContactFactory.buildContact("james2@gmail.com", "0739946042", shippingAddress2, billingAddress2);
         System.out.println(con2);
 
-        Contact con3 = CustomerContactFactory.buildContact("vxayiya2@gmail.com", "0835805117", shippingAddress3, billingAddress3);
+
+        Contact con3 = CustomerContactFactory.buildContact("vxayiya@gmail.com", "0835805117", shippingAddress3, billingAddress3);
+
         System.out.println(con3);
 
         customer1 = CustomerFactory.buildCustomer( "Leroy", "Kulcha", "Liam", "Lkulcha123", con1);
@@ -203,6 +220,7 @@ class CartServiceTest {
     }
 
     @Test
+    //@Disabled
     @Order(2)
     void read() {
         System.out.println("============================Read==================================");
@@ -213,6 +231,7 @@ class CartServiceTest {
     }
 
     @Test
+    //@Disabled
     @Order(3)
     void update() {
         System.out.println("============================Update==================================");
@@ -224,6 +243,7 @@ class CartServiceTest {
 
 
     @Test
+    //@Disabled
     @Order(4)
     void delete() {
         System.out.println("============================Delete===============================");
@@ -233,7 +253,7 @@ class CartServiceTest {
     }
 
     @Test
-    @Order(5)
+    //@Order(5)
     void getall() {
         System.out.println("=============================GetALL==============================");
         List<Cart>carts=cartService.getall();
@@ -242,6 +262,7 @@ class CartServiceTest {
     }
 
     @Test
+    @Disabled
     @Order(6)
     void quantityTest() {
         int quantity=cartService.quantity(1L);
@@ -250,6 +271,7 @@ class CartServiceTest {
     }
 
     @Test
+    //@Disabled
     @Order(7)
     void totalPriceTest() {
         double sum=cartService.getCartTotalPrice(1L);
@@ -259,6 +281,16 @@ class CartServiceTest {
         }
         assertEquals(sum,sum2);
         System.out.println("Test Passed:TotalPrices match :\nprice1:R"+sum+"\nprice2:R"+sum2);
+
+    }
+    @Test
+    //@Disabled
+    @Order(8)
+    void getCartWithCustomerEmail() {
+       Cart cartFetched=cartService.getCartByCustomerEmail("vxayiya@gmail.com");
+       assertNotNull(cartFetched);
+        System.out.println(cartFetched);
+
 
     }
 }

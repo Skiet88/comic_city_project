@@ -9,5 +9,7 @@ import za.ac.cput.domain.WishList;
 public interface WishListRepository extends JpaRepository<WishList,Long> {
     @Query("SELECT COUNT(cb) FROM WishList w JOIN w.comicBooks cb WHERE w.wishListId = :wishListId")
     int numberOfBooksOnThisWishList(@Param("wishListId") Long wishListId);
+
+    WishList findByCustomer_Contact_Email(String email);
 }
 

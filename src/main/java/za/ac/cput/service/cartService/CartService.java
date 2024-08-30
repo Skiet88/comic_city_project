@@ -1,6 +1,7 @@
 package za.ac.cput.service.cartService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import za.ac.cput.domain.Cart;
 import za.ac.cput.domain.ComicBook;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class CartService implements ICartService {
     private CartRepository cartRepository;
-
+    private ComicBookRepository comicBookRepository;
 
     private ComicBookRepository comicBookRepository;
     private CustomerService customerService;
@@ -29,6 +30,7 @@ public class CartService implements ICartService {
     @Autowired
     public CartService(CartRepository cartRepository, CustomerService customerService, ComicBookService comicBookService, ComicBookRepository comicBookRepository) {
         this.cartRepository = cartRepository;
+
         this.customerService = customerService;
         this.comicBookRepository = comicBookRepository;
         this.comicBookService = comicBookService;
@@ -93,6 +95,8 @@ public class CartService implements ICartService {
 
     @Override
     public Cart update(Cart cart) {
+        System.out.println(cart);
+        comicBookRepository.saveAll(cart.getComicBooks());
         return cartRepository.save(cart);
     }
 
@@ -107,10 +111,15 @@ public class CartService implements ICartService {
         return cartRepository.findAll();
     }
 
-    public double getCartTotalPrice(Long cartId){
+    public double getCartTotalPrice(Long cartId) {
         return cartRepository.calculateCartTotalPrice(cartId);
     }
-    public int quantity(Long cartId){
+
+    public int quantity(Long cartId) {
         return cartRepository.numberOfBooksOnThisCart(cartId);
+    }
+
+    public Cart getCartByCustomerEmail(String email) {
+        return cartRepository.findCartByCustomer_ContactEmail(email);
     }
 }

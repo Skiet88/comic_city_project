@@ -31,7 +31,9 @@ public class ComicBook {
     private LocalDate releaseDate;
 
     //@ManyToMany(fetch = FetchType.EAGER,cascade = { CascadeType.REMOVE })
+
     @ManyToMany(fetch = FetchType.EAGER)
+
     @JoinTable(
             name = "comic_book_author",
             joinColumns = @JoinColumn(name = "comic_book_id"),

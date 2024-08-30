@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class WishListService implements IWishListService {
     private WishListRepository wishListRepository;
+
     private CustomerService customerService;
     private ComicBookService comicBookService;
     private ComicBookRepository comicBookRepository;
@@ -32,6 +33,7 @@ public class WishListService implements IWishListService {
 
     @Override
     public WishList create(WishList wishList) {
+
         Customer customer = customerService.create(wishList.getCustomer());
         List<ComicBook> comicBooks = wishList.getComicBooks();
 
@@ -77,6 +79,7 @@ public class WishListService implements IWishListService {
                 }}
         }
         return  wishList;
+
     }
 
     @Override
@@ -99,7 +102,12 @@ public class WishListService implements IWishListService {
     public List<WishList> getall() {
         return wishListRepository.findAll();
     }
-    public int calculateQuantity(Long wishListId){
+
+    public int calculateQuantity(Long wishListId) {
         return wishListRepository.numberOfBooksOnThisWishList(wishListId);
+    }
+
+    public WishList getWishListWithCustomerEmail(String email) {
+        return wishListRepository.findByCustomer_Contact_Email(email);
     }
 }

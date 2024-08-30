@@ -134,7 +134,7 @@ class ComicBookControllerTest {
     @Order(2)
     void c_read() {
         System.out.println(savedBook1);
-        String url = BASE_URL + "/read/" + savedBook1.getSKU();
+        String url = BASE_URL + "/read/" + 1;
         System.out.println(url);
 
         ResponseEntity<ComicBook> response = testRestTemplate.getForEntity(url, ComicBook.class);

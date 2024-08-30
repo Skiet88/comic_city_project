@@ -102,5 +102,13 @@ class CustomerServiceTest {
         System.out.println("==================================GET ALL===========================");
         System.out.println(service.getall());
     }
+    @Test
+    @Order(6)
+    void getByEmail(){
+        System.out.println("==================================GET By Email===========================");
+       Customer customer=service.getCustomerByEmail("vxayiya@gmail.com");
+       assertNotNull(customer);
+       System.out.println(customer);
+    }
 
 }
