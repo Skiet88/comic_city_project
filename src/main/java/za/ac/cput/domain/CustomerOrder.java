@@ -9,7 +9,8 @@ import java.util.Objects;
 @Entity
 public class CustomerOrder {
     @Id
-    private String orderId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long orderId;
     private LocalDate orderDate;
 
 
@@ -21,9 +22,13 @@ public class CustomerOrder {
             inverseJoinColumns = @JoinColumn(name = "comic_book_id")
     )
     private List<ComicBook> comicBooks;
+
+
     private double totalAmount;
 
-    private Long customer;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
 
 
@@ -38,13 +43,12 @@ public class CustomerOrder {
         this.totalAmount = builder.totalAmount;
         this.customer = builder.customer;
 
+
     }
 
-    public Long getCustomer() {
-        return customer;
-    }
 
-    public String getOrderId() {
+
+    public Long getOrderId() {
         return orderId;
     }
 
@@ -60,19 +64,10 @@ public class CustomerOrder {
     public double getTotalAmount() {
         return totalAmount;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CustomerOrder that = (CustomerOrder) o;
-        return Double.compare(totalAmount, that.totalAmount) == 0 && Objects.equals(orderId, that.orderId) && Objects.equals(orderDate, that.orderDate) && Objects.equals(comicBooks, that.comicBooks) && Objects.equals(customer, that.customer);
+    public Customer getCustomer() {
+        return customer;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(orderId, orderDate, comicBooks, totalAmount, customer);
-    }
 
     @Override
     public String toString() {
@@ -86,23 +81,23 @@ public class CustomerOrder {
     }
 
     public static class CustomerOrderBuilder {
-        private String orderId;
+        private Long orderId;
         private LocalDate orderDate;
 
         private List<ComicBook> comicBooks;
         private double totalAmount;
-        private Long customer;
+        private Customer customer;
 
 
         public CustomerOrderBuilder() {
         }
 
-        public CustomerOrderBuilder setCustomer(Long customer) {
+        public CustomerOrderBuilder setCustomer(Customer customer) {
             this.customer = customer;
             return this;
         }
 
-        public CustomerOrderBuilder setOrderId(String orderId) {
+        public CustomerOrderBuilder setOrderId(Long orderId) {
             this.orderId = orderId;
             return this;
         }
@@ -123,8 +118,6 @@ public class CustomerOrder {
             this.totalAmount = totalAmount;
             return this;
         }
-
-
 
         public CustomerOrderBuilder copy(CustomerOrder customerOrder) {
             this.orderId = customerOrder.orderId;

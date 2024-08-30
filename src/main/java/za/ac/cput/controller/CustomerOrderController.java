@@ -20,21 +20,22 @@ public class CustomerOrderController {
     }
 
     @GetMapping("/read/{customerOrderId}")
-    public CustomerOrder read(@PathVariable String id) {
-        return customerOrderService.read(id);
+    public CustomerOrder read(@PathVariable("customerOrderId") Long customerOrderId) {
+        return customerOrderService.read(customerOrderId);
     }
 
     @PostMapping("/update")
     public CustomerOrder update(@RequestBody CustomerOrder customerOrder) {
+        System.out.println("Entered update");
         return customerOrderService.update(customerOrder);
     }
 
     @DeleteMapping("/delete/{customerId}")
-    public void delete(@PathVariable String customerId) {
+    public void delete(@PathVariable Long customerId) {
         customerOrderService.delete(customerId);
     }
 
-    @GetMapping
+    @GetMapping("/getAll")
     public List<CustomerOrder> findAll() {
         return customerOrderService.getall();
     }

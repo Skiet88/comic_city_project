@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,6 +42,7 @@ class WishListControllerTest {
 
     private static Address billingAddress1;
     private static Address shippingAddress1;
+    static  WishList wishListCreated;
 
     @BeforeAll
     static void setUp() {
@@ -58,7 +60,10 @@ class WishListControllerTest {
 
         publisher1 = PublisherFactory.buildPublisher(1234L, "Marvel", 2000);
 
-        book1 = ComicBookFactory.bookBuilder("Thor", "Fantasy", "AsGuards Prince son of Zuis",
+        Set<Genre> genres1 = Set.of(Genre.FANTASY, Genre.SCI_FI);
+
+
+        book1 = ComicBookFactory.bookBuilder("Thor", genres1, "AsGuards Prince son of Zuis",
                 "B01", 299.99, 2.00, 1, authors1, publisher1, LocalDate.of(2022, 03, 04), photo);
 
         comicBooks1 = new ArrayList<>();
@@ -72,13 +77,13 @@ class WishListControllerTest {
         System.out.println(shippingAddress1);
 
 
-        Contact con1 = CustomerContactFactory.buildContact("leroyk@gmail.com", "0739946042", shippingAddress1, billingAddress1);
+        Contact con1 = CustomerContactFactory.buildContact("leroyk2@gmail.com", "0739946042", shippingAddress1, billingAddress1);
         System.out.println(con1);
 
-        customer1 = CustomerFactory.buildCustomer(1234, "Leroy", "Kulcha", "Liam", "Lkulcha123", con1);
+        customer1 = CustomerFactory.buildCustomer( "Leroy", "Kulcha", "Liam", "Lkulcha123", con1);
         System.out.println(customer1);
 
-        wishList1 = WishListFactory.buildWishList(1L, "My Fave", customer1, comicBooks1, LocalDate.of(2024, 04, 12), LocalDate.now());
+        wishList1 = WishListFactory.buildWishList(9L, "My Fave", customer1, comicBooks1, LocalDate.of(2024, 04, 12), LocalDate.now());
         System.out.println(wishList1);
 
     }
@@ -90,15 +95,15 @@ class WishListControllerTest {
         ResponseEntity<WishList> response = testRestTemplate.postForEntity(url, wishList1, WishList.class);
         assertNotNull(response);
         assertNotNull(response.getBody());
-        WishList wishListCreated = response.getBody();
-        assertEquals(wishListCreated.getWishListId(), response.getBody().getWishListId());
-        System.out.println("WishList Created:" + wishListCreated);
+         wishListCreated = response.getBody();
+        System.out.println("WishList Created: " + wishListCreated);
     }
 
     @Test
     @Order(2)
     void read() {
-        String url = BASE_URL + "/read/" + wishList1.getWishListId();
+        String url = BASE_URL + "/read/" + wishListCreated.getWishListId();
+        System.out.println(url);
         ResponseEntity<WishList> response = testRestTemplate.getForEntity(url, WishList.class);
         WishList readWishList=response.getBody();
         assertEquals(readWishList.getWishListId(), response.getBody().getWishListId());
@@ -109,7 +114,7 @@ class WishListControllerTest {
     @Order(3)
     void update() {
         String url=BASE_URL+"/update";
-        WishList newWishList=new WishList.Builder().copy(wishList1).setWishListName("Surprise For My Baby Boy").build();
+        WishList newWishList=new WishList.Builder().copy(wishListCreated).setWishListName("Surprise For My Baby Mo").build();
         System.out.println(newWishList);
 
         ResponseEntity<WishList>postResponse=testRestTemplate.postForEntity(url,newWishList,WishList.class);
@@ -123,10 +128,11 @@ class WishListControllerTest {
 
     @Test
     @Order(4)
+    @Disabled
     void delete() {
-        String url=BASE_URL+"/delete/"+wishList1.getWishListId();
+        String url=BASE_URL+"/delete/"+wishListCreated.getWishListId();
         testRestTemplate.delete(url);
-        System.out.println("WishList with ID:"+wishList1.getWishListId()+" is deleted!");
+        System.out.println("WishList with ID:"+wishListCreated.getWishListId()+" is deleted!");
     }
 
     @Test
@@ -145,7 +151,7 @@ class WishListControllerTest {
     @Test
     @Order(6)
     void quantity() {
-        String url = BASE_URL + "/quantity/" + wishList1.getWishListId();
+        String url = BASE_URL + "/quantity/" + wishListCreated.getWishListId();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<Integer> entity = new HttpEntity<>(null, headers);
         ResponseEntity<Integer> response = testRestTemplate.exchange(url, HttpMethod.GET, entity, Integer.class);

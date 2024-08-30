@@ -21,6 +21,8 @@ public class AddressService  implements IAddressService{
 
     private AddressRepository addressRepository;
 
+
+
     @Autowired
     AddressService (AddressRepository addressRepository){
         this.addressRepository = addressRepository;
@@ -28,9 +30,27 @@ public class AddressService  implements IAddressService{
 
     @Override
     public Address create(Address address) {
+
         if(address == null)
             throw new IllegalArgumentException("address cannot be null");
-        return addressRepository.save(address);}
+
+
+        if (address != null) {
+            System.out.println("checking if existing address exists");
+            // AddressId addressId = new AddressId(address.getStreet(), address.getPostalCode());
+            Optional<Address> existingAddress = addressRepository.findById(address.getId());
+            if (existingAddress.isPresent()) {
+                System.out.println("found address");
+                address = existingAddress.get();
+            } else {
+                System.out.println("saving new address");
+                address = addressRepository.save(address);
+                System.out.println("Saved");
+            }
+        }
+        return address;
+
+    }
 
 
     @Override

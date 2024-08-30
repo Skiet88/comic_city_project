@@ -1,5 +1,6 @@
 package za.ac.cput.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,13 +16,13 @@ import java.util.stream.Collectors;
 @Entity
 public class Review {
     @Id
+    @JsonProperty("reviewID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewID;
 
     @ManyToOne
     private ComicBook comicBook;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne( fetch = FetchType.EAGER)
     private Customer customer;
 
     private int reviewRating;

@@ -17,9 +17,9 @@ import java.util.List;
 @Entity
 @Table(name = "comic_books")
 public class ComicBook {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long sku;
 
     private String name;
@@ -31,7 +31,7 @@ public class ComicBook {
     private LocalDate releaseDate;
 
     //@ManyToMany(fetch = FetchType.EAGER,cascade = { CascadeType.REMOVE })
-    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "comic_book_author",
             joinColumns = @JoinColumn(name = "comic_book_id"),
@@ -51,11 +51,15 @@ public class ComicBook {
 
     @JsonProperty("isbn")
     private String ISBN;
-    @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
-    private String genre;
+    @ElementCollection(targetClass = Genre.class ,fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "comic_book_genres", joinColumns = @JoinColumn(name = "comic_book_id"))
+    @Column(name = "genre")
+    private Set<Genre> genres;  // Multiple genre
 
     @Lob
     @Column(length=100000)
@@ -76,7 +80,7 @@ public class ComicBook {
         this.quantity = builder.quantity;
         this.ISBN = builder.ISBN;
         this.publisher = builder.publisher;
-        this.genre = builder.genre;
+        this.genres = builder.genres;
         this.photo = builder.photo;
     }
 
@@ -93,7 +97,10 @@ public class ComicBook {
     public String getISBN() { return ISBN; }
     @JsonIgnore
     public Publisher getPublisher() { return publisher; }
-    public String getGenre() { return genre; }
+
+    public Set<Genre> getGenres() {
+        return genres;
+    }
 
     public byte[] getPhoto() {
         return photo;
@@ -102,7 +109,7 @@ public class ComicBook {
     @Override
     public String toString() {
         return "ComicBook{" +
-                "SKU=" + sku +
+                "sku=" + sku +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", weight=" + weight +
@@ -112,23 +119,22 @@ public class ComicBook {
                 ", quantity=" + quantity +
                 ", ISBN='" + ISBN + '\'' +
                 ", publisher=" + publisher +
-                ", genre='" + genre + '\'' +
-                //", photo=" + Arrays.toString(photo) +
+                ", genres=" + genres +
+               // ", photo=" + Arrays.toString(photo) +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ComicBook comicBook)) return false;
-        return Double.compare(weight, comicBook.weight) == 0 && Double.compare(price, comicBook.price) == 0 && quantity == comicBook.quantity && Objects.equals(sku, comicBook.sku) && Objects.equals(name, comicBook.name) && Objects.equals(description, comicBook.description) && Objects.equals(releaseDate, comicBook.releaseDate) && Objects.equals(authors, comicBook.authors) && Objects.equals(ISBN, comicBook.ISBN) && Objects.equals(publisher, comicBook.publisher) && Objects.equals(genre, comicBook.genre) && Arrays.equals(photo, comicBook.photo);
+        if (o == null || getClass() != o.getClass()) return false;
+        ComicBook comicBook = (ComicBook) o;
+        return Double.compare(weight, comicBook.weight) == 0 && Double.compare(price, comicBook.price) == 0 && quantity == comicBook.quantity && Objects.equals(sku, comicBook.sku) && Objects.equals(name, comicBook.name) && Objects.equals(description, comicBook.description) && Objects.equals(releaseDate, comicBook.releaseDate) && Objects.equals(authors, comicBook.authors) && Objects.equals(carts, comicBook.carts) && Objects.equals(wishLists, comicBook.wishLists) && Objects.equals(ISBN, comicBook.ISBN) && Objects.equals(publisher, comicBook.publisher) && Objects.equals(genres, comicBook.genres) && Objects.deepEquals(photo, comicBook.photo);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(sku, name, description, weight, releaseDate, authors, price, quantity, ISBN, publisher, genre);
-        result = 31 * result + Arrays.hashCode(photo);
-        return result;
+        return Objects.hash(sku, name, description, weight, releaseDate, authors, carts, wishLists, price, quantity, ISBN, publisher, genres, Arrays.hashCode(photo));
     }
 
     public static class Builder {
@@ -142,8 +148,8 @@ public class ComicBook {
         private int quantity;
         private String ISBN;
         private Publisher publisher;
-        private String genre;
         private byte[] photo;
+        private Set<Genre> genres;
 
 
         public Builder setSKU(Long SKU) {
@@ -164,7 +170,7 @@ public class ComicBook {
             this.quantity = c.quantity;
             this.ISBN = c.ISBN;
             this.publisher = c.publisher;
-            this.genre = c.genre;
+            this.genres = c.genres;
             this.photo = c.photo;
 
             return this;
@@ -177,6 +183,11 @@ public class ComicBook {
 
         public Builder setDescription(String description) {
             this.description = description;
+            return this;
+        }
+
+        public Builder setGenres(Set<Genre> genres) {
+            this.genres = genres;
             return this;
         }
 
@@ -215,10 +226,6 @@ public class ComicBook {
             return this;
         }
 
-        public Builder setCategory(String genre) {
-            this.genre = genre;
-            return this;
-        }
         public Builder setPhoto(byte[] photo) {
             this.photo = photo;
             return this;

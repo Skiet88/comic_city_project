@@ -1,15 +1,18 @@
 <template>
-
-  <HelloWorld/>
+  <div id="app">
+    <Layout>
+      <router-view></router-view>
+    </Layout>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Layout from "@/components/MainLayout.vue";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Layout
   }
 }
 </script>

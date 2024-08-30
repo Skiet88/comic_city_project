@@ -9,19 +9,23 @@ import za.ac.cput.domain.ComicBook;
 import za.ac.cput.service.comicBookService.ComicBookService;
 
 import java.util.List;
-
+//@CrossOrigin(origins = "*" )
 @RestController
 @RequestMapping("/comic_book")
+
 public class ComicBookController {
     @Autowired
     private ComicBookService comicBookService;
 
     @PostMapping("/create")
     public ComicBook create(@RequestBody ComicBook comicBook) {
+        System.out.println("Entered Comic book");
+        System.out.println(comicBook);
         ComicBook savedComicBook = comicBookService.create(comicBook);
         return savedComicBook;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping("/read/{sku}")
     public ResponseEntity read(@PathVariable("sku") Long sku) {
         if (sku == null) {

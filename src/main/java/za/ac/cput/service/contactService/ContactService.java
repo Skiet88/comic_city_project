@@ -6,6 +6,8 @@ import za.ac.cput.domain.Contact;
 import za.ac.cput.repository.ContactRepository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ContactService implements IContactService{
     @Autowired
@@ -13,7 +15,23 @@ public class ContactService implements IContactService{
 
     @Override
     public Contact create(Contact contact) {
-        return repo.save(contact);
+
+        if (contact != null) {
+            System.out.println("checking if existing contact exists");
+
+            Optional<Contact> existingContact = repo.findById(contact.getEmail());
+
+            if (existingContact.isPresent()) {
+                System.out.println("found contact");
+                contact = existingContact.get();
+                System.out.println("Linked existing contact");
+            } else {
+                System.out.println("saving new contact");
+                contact = repo.save(contact);
+                System.out.println("Saved");
+            }
+        }
+        return  contact;
     }
 
     @Override

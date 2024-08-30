@@ -4,17 +4,42 @@ package za.ac.cput.service.authorService;
 // https://github.com/Skiet88/comic__city_project
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import za.ac.cput.domain.Address;
 import za.ac.cput.domain.Author;
 import za.ac.cput.repository.AuthorRepository;
+import za.ac.cput.repository.CartRepository;
+import za.ac.cput.repository.ComicBookRepository;
+import za.ac.cput.repository.CustomerRepository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class AuthorService implements IAuthorService{
-    @Autowired
+
     private AuthorRepository repo;
+    @Autowired
+    public AuthorService(AuthorRepository authorRepository) {
+        this.repo = authorRepository;
+
+    }
+
     @Override
     public Author create(Author author) {
-        return repo.save(author);
+        if (author != null) {
+            System.out.println("checking if existing author exists");
+            Optional<Author> existingAuthor = repo.findById(author.getAuthorID());
+            if (existingAuthor.isPresent()) {
+                System.out.println("found author");
+                author = existingAuthor.get();
+            } else {
+                System.out.println("saving new author");
+                author = repo.save(author);
+                System.out.println("Saved");
+            }
+        }
+        return author;
+
     }
 
     @Override

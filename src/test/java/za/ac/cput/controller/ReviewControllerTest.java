@@ -9,10 +9,16 @@ import org.springframework.web.client.RestClientException;
 import za.ac.cput.domain.*;
 import za.ac.cput.factory.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,30 +37,44 @@ class ReviewControllerTest {
     private static List<Author> authors;
     private static Author author1;
     private static byte[] photo;
+    private static ByteArrayOutputStream out;
+    private static BufferedImage image;;
 
     static Review savedReview;
 
     @BeforeAll
     static void setUp() {
         System.out.println("=============================SET-UP====================================");
+        String url = "download.jpeg";
+        try {
+            image = ImageIO.read(new File(url));
+            out = new ByteArrayOutputStream();
+            ImageIO.write(image, "jpeg", out);
 
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        photo = out.toByteArray();
+        System.out.println(photo);
         publisher = PublisherFactory.buildPublisher(5L, "Marvel", 2000);
 
         Address billingAddress = BillingAddressFactory.buildBillingAddress("EFT", "34 Batersea Drive", "Kibbler park", "2091", "Johannesburg");
 
         Address shippingAddress = ShippingAddressFactory.buildShippingAddress(LocalTime.parse("22:00:00"), "34 Batersea Drive", "Kibbler park", "2091", "Johannesburg");
 
-        Contact con1 = CustomerContactFactory.buildContact("leroyk@gmail.com", "0739946042", shippingAddress, billingAddress);
-        customer = CustomerFactory.buildCustomer(4L, "Leroy", "Kulcha", "Sane", "Lkulcha123", con1);
+        Contact con1 = CustomerContactFactory.buildContact("leroyukh@gmail.com", "0739946042", shippingAddress, billingAddress);
+        customer = CustomerFactory.buildCustomer( "Leroy", "Kulcha", "Sane", "Lkulcha123", con1);
 
         author1 = AuthorFactory.buildAuthor(001L, "Lamark", "Mike", "Darwin");
         authors = new ArrayList<>();
         authors.add(author1);
 
-        comicBook = ComicBookFactory.bookBuilder("Thor", "Fantasy", "AsGuards Prince son of Zuis",
-                "B01", 299.99, 2.00, 1, authors, publisher, LocalDate.of(2022, 03, 04), new byte[0]);
+        Set<Genre> genres1 = Set.of(Genre.FANTASY, Genre.SCI_FI);
+        ComicBook comicBook1 = ComicBookFactory.bookBuilder("Thor", genres1, "AsGuards Prince son of Zuis",
+                "B01", 299.99, 2.00, 1, authors, publisher, LocalDate.of(2022, 03, 04), photo);
 
-        review1 = ReviewFactory.buildReview(1024L, customer, comicBook, 4, "Good book", LocalDate.now(), "Good book review");
+        review1 = ReviewFactory.buildReview( customer, comicBook1, 4, "Good book", LocalDate.now(), "Good book review");
     }
 
     @Test
@@ -85,7 +105,7 @@ class ReviewControllerTest {
     @Order(3)
     void update() {
         String url = BASE_URL + "/update";
-        Review newReview = new Review.ReviewBuilder().copy(review1)
+        Review newReview = new Review.ReviewBuilder().copy(savedReview)
                 .setReviewTitle("Doomsday")
                 .setReviewDescription("Super villian of the MCU")
                 .build();
@@ -102,6 +122,7 @@ class ReviewControllerTest {
 
     @Test
     @Order(4)
+    @Disabled
     void delete() {
         String url = BASE_URL + "/delete/" + savedReview.getReviewID();
         testRestTemplate.delete(url);

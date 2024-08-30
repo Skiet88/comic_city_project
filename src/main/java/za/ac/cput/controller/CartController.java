@@ -26,6 +26,7 @@ public class CartController {
 
     @GetMapping("/read/{cartId}")
     public Cart read(@PathVariable("cartId") Long cartId) {
+        System.out.println("Entered read method");
         return cartService.read(cartId);
     }
 

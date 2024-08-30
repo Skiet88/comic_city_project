@@ -29,12 +29,10 @@ class CustomerFactoryTest {
         System.out.println(shippingAddress);
 
         Contact con1 = CustomerContactFactory.buildContact("leroyk@gmail.com", "0739946042", shippingAddress, billingAddress);
-
-
         Contact con2 = CustomerContactFactory.buildContact("2-mycput.za", "0739946042",  shippingAddress , billingAddress);
 
-        customer1 = CustomerFactory.buildCustomer(1234,"Leroy" , "Kulcha", "Liam","Lkulcha123",con1);
-        customer2 = CustomerFactory.buildCustomer(1234,"James" , "Kulcha", "","jkulcha456",con2);
+        customer1 = CustomerFactory.buildCustomer("Leroy" , "Kulcha", "Liam","Lkulcha123",con1);
+        customer2 = CustomerFactory.buildCustomer("James" , "Kulcha", "","jkulcha456",con2);
 
     }
 

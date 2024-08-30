@@ -1,5 +1,7 @@
 package za.ac.cput.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.domain.Review;
@@ -11,9 +13,12 @@ import java.util.List;
 public class ReviewController {
     @Autowired
     private ReviewService reviewService;
+    private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
 
     @PostMapping("/create")
     public Review create(@RequestBody Review review) {
+        System.out.println("Entered create");
+        logger.info("Entered create method with review: {}", review);
         return reviewService.create(review);
     }
 

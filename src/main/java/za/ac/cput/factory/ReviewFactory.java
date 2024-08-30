@@ -27,4 +27,19 @@ public class ReviewFactory {
                 .setReviewTitle(reviewTitle)
                 .build();
     }
+    public static Review buildReview(Customer customer, ComicBook comicBook, int reviewRating, String reviewDescription, LocalDate reviewDate, String reviewTitle) {
+        if (Helper.isObjectNull(customer) || Helper.isObjectNull(comicBook) || Helper.isStringNullorEmpty(reviewDescription) || Helper.isStringNullorEmpty(reviewTitle) || reviewRating < 1 || reviewRating > 5 || Helper.isValidDate(reviewDate)) {
+            return null;
+        }
+
+        return new Review.ReviewBuilder()
+
+                .setCustomer(customer)
+                .setComicBook(comicBook)
+                .setReviewRating(reviewRating)
+                .setReviewDescription(reviewDescription)
+                .setReviewDate(reviewDate)
+                .setReviewTitle(reviewTitle)
+                .build();
+    }
 }

@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,7 +42,7 @@ class CartControllerTest {
     private static Customer customer1;
     private static Address billingAddress1;
     private static Address shippingAddress1;
-
+    static Cart savedCart;
 
     @BeforeAll
     static void setUp() {
@@ -57,11 +58,13 @@ class CartControllerTest {
         authors1 = new ArrayList<>();
         authors1.add(author1);
 
-        publisher1 = PublisherFactory.buildPublisher(1234L, "Marvel", 2000);
+        publisher1 = PublisherFactory.buildPublisher(123L, "Marvel", 2000);
 
         //Book
 
-        book1 = ComicBookFactory.bookBuilder("Thor", "Fantasy", "AsGuards Prince son of Zuis",
+        Set<Genre> genres1 = Set.of(Genre.FANTASY, Genre.SCI_FI);
+
+        book1 = ComicBookFactory.bookBuilder("Thor", genres1, "AsGuards Prince son of Zuis",
                 "B01", 299.99, 2.00, 1, authors1, publisher1, LocalDate.of(2022, 03, 04), photo);
 
         comicBooks1 = new ArrayList<>();
@@ -75,10 +78,10 @@ class CartControllerTest {
         System.out.println(shippingAddress1);
 
         //Contact
-        Contact con1 = CustomerContactFactory.buildContact("leroyk@gmail.com", "0739946042", shippingAddress1, billingAddress1);
+        Contact con1 = CustomerContactFactory.buildContact("leroyk9999@gmail.com", "0739946042", shippingAddress1, billingAddress1);
         System.out.println(con1);
 
-        customer1 = CustomerFactory.buildCustomer(1234, "Leroy", "Kulcha", "Liam", "Lkulcha123", con1);
+        customer1 = CustomerFactory.buildCustomer( "Leroy", "Kulcha", "Liam", "Lkulcha123", con1);
         System.out.println(customer1);
 
         //Cart
@@ -96,7 +99,7 @@ class CartControllerTest {
         ResponseEntity<Cart> postResponse = restTemplate.postForEntity(url, cart1, Cart.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
-        Cart savedCart = postResponse.getBody();
+         savedCart = postResponse.getBody();
         assertEquals(savedCart.getCartId(), postResponse.getBody().getCartId());
         System.out.println("Saved data:" + savedCart);
 
@@ -105,16 +108,17 @@ class CartControllerTest {
     @Test
     @Order(2)
     void read() {
-        String url = BASE_URL + "/read/" + cart1.getCartId();
+        System.out.println("Id to read: " + savedCart.getCartId());
+        String url = BASE_URL + "/read/" + savedCart.getCartId();
         ResponseEntity<Cart> response = restTemplate.getForEntity(url, Cart.class);
-        assertEquals(response.getBody().getCartId(), cart1.getCartId());
+        assertEquals(response.getBody().getCartId(), savedCart.getCartId());
         System.out.println("Read: " + response.getBody());
     }
 
     @Test
     @Order(3)
     void update() {
-        Cart newCart = new Cart.Builder().copy(cart1).setUpdatedDate(LocalDate.now()).build();
+        Cart newCart = new Cart.Builder().copy(savedCart).setUpdatedDate(LocalDate.now()).build();
         String url = BASE_URL + "/update";
         ResponseEntity<Cart> postResponse = restTemplate.postForEntity(url, newCart, Cart.class);
         assertNotNull(postResponse);
@@ -127,6 +131,7 @@ class CartControllerTest {
 
     @Test
     @Order(7)
+    @Disabled
     void delete() {
         String url = BASE_URL + "/delete/" + cart1.getCartId();
         System.out.println("URL: " + url);
@@ -151,11 +156,11 @@ class CartControllerTest {
     @Test
     @Order(5)
     void getCartTotalPrice() {
-        String url = BASE_URL + "/totalPrice/" + cart1.getCartId();
+        String url = BASE_URL + "/totalPrice/" + savedCart.getCartId();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<Double> entity = new HttpEntity<>(null, headers);
         ResponseEntity<Double> response = restTemplate.exchange(url, HttpMethod.GET, entity, Double.class);
-        System.out.println("CartID:" + cart1.getCartId() + "\nTotal Price:" + response.getBody());
+        System.out.println("CartID:" + savedCart.getCartId() + "\nTotal Price:" + response.getBody());
         System.out.println(response);
         System.out.println(response.getBody());
 

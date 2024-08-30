@@ -5,8 +5,11 @@ import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -40,15 +43,27 @@ class InvoiceFactoryTest {
         authors.add(author1);
         authors.add(author2);
 
-        ComicBook comicBook1 = ComicBookFactory.bookBuilder("Thor", "Fantasy", "AsGuards Prince son of Zuis",
+        Set<Genre> genres1 = Set.of(Genre.FANTASY, Genre.SCI_FI);
+       ComicBook comicBook1 = ComicBookFactory.bookBuilder("Thor", genres1, "AsGuards Prince son of Zuis",
                 "B01", 299.99, 2.00, 1, authors, publisher1, LocalDate.of(2022, 03, 04), photo);
 
         ArrayList<ComicBook> comicBooks = new ArrayList<>();
         comicBooks.add(comicBook1);
+        Address billingAddress = BillingAddressFactory.buildBillingAddress("card", "34 Batersea Drive", "Kibbler park", "2091", "Johannesburg");
+        System.out.println(billingAddress);
 
-        customerOrder1 = CustomerOrderFactory.buildCustomerOrder("ORD001", 1L, LocalDate.of(2022, 03, 04), comicBooks, 650.00);
+        Address shippingAddress = ShippingAddressFactory.buildShippingAddress(LocalTime.of(9,52), "34 Batersea Drive", "Kibbler park", "2091", "Johannesburg");
+        System.out.println(shippingAddress);
+
+        Contact con1 = CustomerContactFactory.buildContact("leroyk@gmail.com", "0739946042", shippingAddress, billingAddress);
+        Contact con2 = CustomerContactFactory.buildContact("2-mycput.za", "0739946042",  shippingAddress , billingAddress);
+
+        Customer customer1 = CustomerFactory.buildCustomer("Leroy" , "Kulcha", "Liam","Lkulcha123",con1);
+        Customer customer2 = CustomerFactory.buildCustomer("James" , "Kulcha", "","jkulcha456",con2);
+
+        customerOrder1 = CustomerOrderFactory.buildCustomerOrder( LocalDate.of(2022, 03, 04), comicBooks,  customer2 , 650.00);
         customerOrder2 = null;
-        customerOrder3 = CustomerOrderFactory.buildCustomerOrder("ORD003", 2L, LocalDate.now(), comicBooks, 650.00);
+        customerOrder3 = CustomerOrderFactory.buildCustomerOrder(LocalDate.now(), comicBooks, customer1,650.00);
 
         invoice1 = InvoiceFactory.buildInvoice(1L, customerOrder1, LocalDateTime.now());
         invoice2 = InvoiceFactory.buildInvoice(2L, customerOrder2, LocalDateTime.now());

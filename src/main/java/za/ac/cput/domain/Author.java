@@ -28,7 +28,7 @@ public class Author {
         this.name = a.name;
     }
 
-    public long getAuthorID() {
+    public Long getAuthorID() {
         return authorID;
     }
 
@@ -64,7 +64,7 @@ public class Author {
         public AuthorBuilder() {
         }
 
-        public AuthorBuilder setAuthorID(long authorID) {
+        public AuthorBuilder setAuthorID(Long authorID) {
             this.authorID = authorID;
             return this;
         }

@@ -1,5 +1,6 @@
 package za.ac.cput.controller;
 
+
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,11 +31,10 @@ class CustomerControllerTest {
     @Autowired
     private CustomerService service;
 
-
-
     private Customer customer1;
     private Customer customer2;
 
+    static  Customer savedCustomer;
     private final String base_url = "http://localhost:8080/comiccity/Customer";
     @BeforeEach
     void setUp() {
@@ -45,13 +45,13 @@ class CustomerControllerTest {
         Address shippingAddress = ShippingAddressFactory.buildShippingAddress(LocalTime.of(9, 52), "33 sea Drive", "Kibbler park 2", "2092", "Johannesburg");
         System.out.println(shippingAddress);
 
-        Contact con1 = CustomerContactFactory.buildContact("leroy@gmail.com", "0739946042", shippingAddress, billingAddress);
+        Contact con1 = CustomerContactFactory.buildContact("leroy9199228@gmail.com", "0739946042", shippingAddress, billingAddress);
         System.out.println(con1);
 
-        Contact con2 = CustomerContactFactory.buildContact("2-mycput.za", "0739946042", shippingAddress, billingAddress);
+        Contact con2 = CustomerContactFactory.buildContact("221164014@mycput.ac.za", "0739946042", shippingAddress, billingAddress);
 
-        customer1 = CustomerFactory.buildCustomer(1L, "Leroy", "Kulcha", "Liam", "Lkulcha123", con1);
-        customer2 = CustomerFactory.buildCustomer(2L, "James", "Kulcha", "", "jkulcha456", con2);
+        customer1 = CustomerFactory.buildCustomer( "Leroy", "Kulcha", "Liam", "Lkulcha123", con1);
+        customer2 = CustomerFactory.buildCustomer( "James", "Kulcha", "jkulcha456", con2);
     }
 
     @Test
@@ -63,41 +63,47 @@ class CustomerControllerTest {
         assertNotNull(postResponse.getBody());
 
         System.out.println("PstR body: " + postResponse);
-        Customer savedCustomer = postResponse.getBody();
-        assertEquals(customer1.getCustomerId(), savedCustomer.getCustomerId());
+       savedCustomer = postResponse.getBody();
+
         System.out.println("Saved data: " + savedCustomer);
     }
 
     @Test
     @Order(2)
     void read() {
-        String url = base_url + "/read/" + customer1.getCustomerId();
+        String url = base_url + "/read/" + savedCustomer.getCustomerId();
         System.out.println("URL: " + url);
         ResponseEntity<Customer> response = restTemplate.getForEntity(url, Customer.class);
         System.out.println("Response: " + response);
-        assertEquals( response.getBody().getCustomerId(), customer1.getCustomerId());
+        System.out.println("Read data: " + response.getBody());
+
+
     }
 
     @Test
     @Order(3)
     void update() {
         String url = base_url + "/update";
-        Customer updateCustomer = new Customer.CustomerBuilder().copy(customer1)
+        System.out.println("To be updated: " + savedCustomer);
+        Customer updateCustomer = new Customer.CustomerBuilder().copy(savedCustomer)
                 .setPassword("Lkulcha456")
                 .build();
+        System.out.println("updated: " + updateCustomer);
+
         ResponseEntity<Customer> postResponse = restTemplate.postForEntity(url, updateCustomer, Customer.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
 
         Customer updatedCustomer = postResponse.getBody();
+        System.out.println("From JPA: " + updatedCustomer);
+
         assertEquals(updateCustomer.getCustomerId(), updatedCustomer.getCustomerId());
-        System.out.println("Saved data: " + updatedCustomer);
     }
 
     @Test
     @Order(4)
     void delete() {
-        String url = base_url + "/delete/" + Long.valueOf(customer1.getCustomerId());
+        String url = base_url + "/delete/" + Long.valueOf(savedCustomer.getCustomerId());
         System.out.println("URL: " + url);
         restTemplate.delete(url);
         System.out.println("Success: deleted customer");

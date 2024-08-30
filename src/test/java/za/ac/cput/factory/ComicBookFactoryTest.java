@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.Author;
 import za.ac.cput.domain.ComicBook;
+import za.ac.cput.domain.Genre;
 import za.ac.cput.domain.Publisher;
 
 import javax.imageio.ImageIO;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -68,12 +70,16 @@ class ComicBookFactoryTest {
         authors.add(author1);
         authors.add(author2);
 
-        book1 = ComicBookFactory.bookBuilder("Thor", "Fantasy", "AsGuards Prince son of Zuis",
+        Set<Genre> genres1 = Set.of(Genre.FANTASY, Genre.SCI_FI);
+        Set<Genre> genres2 = Set.of(Genre.MYSTERY);
+
+
+        book1 = ComicBookFactory.bookBuilder("Thor", genres1, "AsGuards Prince son of Zuis",
                 "B01", 299.99, 2.00, 1, authors, publisher1, LocalDate.of(2022, 03, 04), photo);
-        book2 = ComicBookFactory.bookBuilder("Avatar", "Sci-Fi", "Two Dimension Worls Colliding into one.",
-                "B02", 199.99, 1.80, 1, authors, publisher1, LocalDate.of(2027, 03, 15), photo);
-        book3 = ComicBookFactory.bookBuilder("HALO", "Fantasy", "GALAXY 2000 years from now",
-                "B03", 0, 3.50, 3, authors, publisher1, LocalDate.of(2021, 05, 30), photo);
+        book2 = ComicBookFactory.bookBuilder("Avatar", genres2, "Two Dimension Worls Colliding into one.",
+                "B02", 199.99, 1.80, 1, authors, publisher1, LocalDate.of(2024, 03, 15), photo);
+        book3 = ComicBookFactory.bookBuilder("HALO", genres1, "GALAXY 2000 years from now",
+                "B03", 539.99, 3.50, 3, authors, publisher1, LocalDate.of(2021, 05, 30), photo);
     }
 
     @Test

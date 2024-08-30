@@ -20,4 +20,15 @@ public class PublisherFactory {
                 .setYearFounded(yearFounded)
                 .build();
     }
+    public static Publisher buildPublisher(String name, int yearFounded){
+        if( Helper.isStringNullorEmpty(name) || Helper.isInvalidInt(yearFounded)
+        ){
+            return null;
+
+        }
+        return new Publisher.PublisherBuilder()
+                .setName(name)
+                .setYearFounded(yearFounded)
+                .build();
+    }
 }

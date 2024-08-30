@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -47,7 +49,7 @@ class ReviewFactoryTest {
         System.out.println(shippingAddress);
 
         Contact con1 = CustomerContactFactory.buildContact("leroyk@gmail.com", "0739946042", shippingAddress, billingAddress);
-        customer = CustomerFactory.buildCustomer(1234,"Leroy" , "Kulcha", "Sane","Lkulcha123",con1);
+        customer = CustomerFactory.buildCustomer("Leroy" , "Kulcha", "Sane","Lkulcha123",con1);
 
 
         author1 = AuthorFactory.buildAuthor(001L,"Lamark", "", "Darwin");
@@ -56,7 +58,8 @@ class ReviewFactoryTest {
         authors.add(author1);
         authors.add(author2);
 
-        comicBook = ComicBookFactory.bookBuilder("Thor", "Fantasy", "AsGuards Prince son of Zuis",
+        Set<Genre> genres1 = Set.of(Genre.FANTASY, Genre.SCI_FI);
+        comicBook = ComicBookFactory.bookBuilder("Thor", genres1, "AsGuards Prince son of Zuis",
                 "B01", 299.99, 2.00, 1, authors, publisher, LocalDate.of(2022, 03, 04), photo);
 
         review1 = ReviewFactory.buildReview(1L, customer, comicBook, 4, "This is a great comic book!", LocalDate.now(), "Review 1");

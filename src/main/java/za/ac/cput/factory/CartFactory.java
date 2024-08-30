@@ -34,6 +34,25 @@ if (cartId <= 0 ||
                 .setUpdatedDate(updateDate)
                 .build();
     }
+    public static Cart buildCart( Customer customer, List<ComicBook> comicBooks, LocalDate createdDate, LocalDate updateDate) {
+        if (
+                Helper.isObjectNull(customer)||
+                Helper.isListNullorEmpty(comicBooks) ||
+                Helper.isAfter(createdDate, LocalDate.now())||
+                Helper.isAfter(updateDate, LocalDate.now())
+        )
+
+        {
+            return null;
+        }
+
+        return new Cart.Builder()
+                .setCustomer(customer)
+                .setComicBooks(comicBooks)
+                .setCreatedDate(createdDate)
+                .setUpdatedDate(updateDate)
+                .build();
+    }
 
 }
 

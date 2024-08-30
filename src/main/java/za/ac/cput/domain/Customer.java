@@ -1,12 +1,15 @@
 package za.ac.cput.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 
+import java.util.List;
 import java.util.Objects;
 @Entity
 public class Customer extends User{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
 
     protected Customer() {
@@ -18,6 +21,7 @@ public class Customer extends User{
         password = c.password;
         contact = c.contact;
     }
+
 
     public Long getCustomerId() {
         return customerId;

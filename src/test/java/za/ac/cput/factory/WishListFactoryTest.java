@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -50,8 +51,8 @@ class WishListFactoryTest {
         con1 = CustomerContactFactory.buildContact("leroyk@gmail.com", "0739946042", shippingAddress, billingAddress);
         con2 = CustomerContactFactory.buildContact("james@gmail.com", "0739946042", shippingAddress, billingAddress);
 
-        customer1 = CustomerFactory.buildCustomer(1234, "Leroy", "Kulcha", "Liam", "Lkulcha123", con1);
-        customer2 = CustomerFactory.buildCustomer(1234, "James", "Ntokozo", "jkulcha456", con2);
+        customer1 = CustomerFactory.buildCustomer( "Leroy", "Kulcha", "Liam", "Lkulcha123", con1);
+        customer2 = CustomerFactory.buildCustomer( "James", "Ntokozo", "jkulcha456", con2);
 
         photo = new byte[0];
 
@@ -65,11 +66,15 @@ class WishListFactoryTest {
         authors.add(author1);
         authors.add(author2);
 
-        book1 = ComicBookFactory.bookBuilder("Thor", "Fantasy", "AsGuards Prince son of Zuis",
+        Set<Genre> genres1 = Set.of(Genre.FANTASY, Genre.SCI_FI);
+        Set<Genre> genres2 = Set.of(Genre.MYSTERY);
+
+
+        book1 = ComicBookFactory.bookBuilder("Thor", genres1, "AsGuards Prince son of Zuis",
                 "B01", 299.99, 2.00, 1, authors, publisher1, LocalDate.of(2022, 03, 04), photo);
-        book2 = ComicBookFactory.bookBuilder("Thor", "Fantasy", "AsGuards Prince son of Zuis",
+        book2 = ComicBookFactory.bookBuilder("Avatar", genres2, "Two Dimension Worls Colliding into one.",
                 "B02", 199.99, 1.80, 1, authors, publisher1, LocalDate.of(2024, 03, 15), photo);
-        book3 = ComicBookFactory.bookBuilder("Thor", "Fantasy", "AsGuards Prince son of Zuis",
+        book3 = ComicBookFactory.bookBuilder("HALO", genres1, "GALAXY 2000 years from now",
                 "B03", 539.99, 3.50, 3, authors, publisher1, LocalDate.of(2021, 05, 30), photo);
 
         comicBooks = new ArrayList<>();

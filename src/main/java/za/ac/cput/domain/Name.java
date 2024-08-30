@@ -1,26 +1,20 @@
 package za.ac.cput.domain;
+
 // Mlungisi L. Mbuyazi
 // 221164014
 // https://github.com/Skiet88/comic__city_project
 
 
 import java.util.Objects;
-
-
 public class Name {
-
 
     private String firstName;
     private String middleName;
     private String lastName;
-//
-////    @OneToOne
-////    //@MapsId
-////    @JoinColumn(name = "id")
-//    private Author author;
 
     protected Name() {
     }
+
     private Name(NameBuilder n) {
         this.firstName = n.firstName;
         this.middleName = n.middleName;

@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class Helper {
@@ -22,6 +23,12 @@ public class Helper {
 
     public static boolean isListNullorEmpty(List list) {
         if (list.isEmpty() || list == null) {
+            return true;
+        }
+        return false;
+    }
+    public static boolean isSetNullorEmpty(Set s) {
+        if (s.isEmpty() || s == null) {
             return true;
         }
         return false;

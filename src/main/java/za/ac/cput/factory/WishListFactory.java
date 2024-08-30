@@ -30,4 +30,18 @@ public class WishListFactory {
                 .setUpdatedDate(updatedDate)
                 .build();
     }
+    public static  WishList buildWishList( String wishListName, Customer customer, List<ComicBook> comicBooks, LocalDate createdDate, LocalDate updatedDate){
+        if( Helper.isStringNullorEmpty(wishListName)|| Helper.isObjectNull(customer)||Helper.isListNullorEmpty(comicBooks) ||
+                Helper.isAfter(createdDate, LocalDate.now()) ||
+                Helper.isAfter(updatedDate, LocalDate.now())){
+            return null;
+        }
+        return new WishList.Builder()
+                .setWishListName(wishListName)
+                .setCustomer(customer)
+                .setComicBooks(comicBooks)
+                .setCreatedDate(createdDate)
+                .setUpdatedDate(updatedDate)
+                .build();
+    }
 }

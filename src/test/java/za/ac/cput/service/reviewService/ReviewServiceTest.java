@@ -15,6 +15,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -33,6 +35,8 @@ class ReviewServiceTest {
     private static ByteArrayOutputStream out;
     private static BufferedImage image;
     private static byte[] photo;
+    static Review savedReview;
+    static Review savedReview2;
 
 
     @BeforeEach
@@ -59,8 +63,8 @@ class ReviewServiceTest {
 
         Address shippingAddress = ShippingAddressFactory.buildShippingAddress(LocalTime.parse("19:00:00"), "34 Batersea Drive", "Kibbler park", "2091", "Johannesburg");
 
-        Contact con1 = CustomerContactFactory.buildContact("leroyk@gmail.com", "0739946042", shippingAddress, billingAddress);
-        customer = CustomerFactory.buildCustomer(4L,"Leroy" , "Kulcha", "Sane","Lkulcha123",con1);
+        Contact con1 = CustomerContactFactory.buildContact("leroyy1@gmail.com", "0739946042", shippingAddress, billingAddress);
+        customer = CustomerFactory.buildCustomer("Leroy" , "Kulcha", "Sane","Lkulcha123",con1);
 
 
         author1 = AuthorFactory.buildAuthor(001L,"Lamark", "Mike", "Darwin");
@@ -69,12 +73,13 @@ class ReviewServiceTest {
         authors.add(author1);
         //authors.add(author2);
 
-        comicBook = ComicBookFactory.bookBuilder("Thor", "Fantasy", "AsGuards Prince son of Zuis",
+        Set<Genre> genres1 = Set.of(Genre.FANTASY, Genre.SCI_FI);
+        ComicBook comicBook1 = ComicBookFactory.bookBuilder("Thor", genres1, "AsGuards Prince son of Zuis",
                 "B01", 299.99, 2.00, 1, authors, publisher, LocalDate.of(2022, 03, 04), photo);
 
-        review1 = ReviewFactory.buildReview(1024L, customer, comicBook, 4, "Good book", LocalDate.now(), "Good book review");
+        review1 = ReviewFactory.buildReview(1024L, customer, comicBook1, 4, "Good book", LocalDate.now(), "Good book review");
 
-        review2 = ReviewFactory.buildReview(2285L, customer, comicBook, 2, "Bad book", LocalDate.now(), "Bad book review");
+        review2 = ReviewFactory.buildReview(2285L, customer, comicBook1, 2, "Bad book", LocalDate.now(), "Bad book review");
     }
 
     @Test
@@ -82,11 +87,11 @@ class ReviewServiceTest {
     void create() {
         System.out.println("=============================CREATE====================================");
 
-        Review savedReview = reviewService.create(review1);
+         savedReview = reviewService.create(review1);
         assertNotNull(savedReview);
         System.out.println(savedReview);
 
-        Review savedReview2 = reviewService.create(review2);
+        savedReview2 = reviewService.create(review2);
         assertNotNull(savedReview2);
         System.out.println(savedReview2);
 
@@ -97,8 +102,8 @@ class ReviewServiceTest {
     void read() {
         System.out.println("=============================READ====================================");
 
-        Review readReview = reviewService.read(Long.valueOf(1024));
-        assertNull(readReview);              //for some reason it does not want to read value keeps on showing null even with assertNotNull
+        Review readReview = reviewService.read(savedReview.getReviewID());
+        assertNotNull(readReview);              //for some reason it does not want to read value keeps on showing null even with assertNotNull
         System.out.println(readReview);
     }
 
@@ -107,7 +112,7 @@ class ReviewServiceTest {
     void update() {
         System.out.println("=============================UPDATE====================================");
 
-        Review updatedReview = new Review.ReviewBuilder().copy(review1)
+        Review updatedReview = new Review.ReviewBuilder().copy(savedReview)
                 .setReviewTitle("Doomsday")
                 .setReviewDescription("Super villian of the MCU")
                 .build();
@@ -122,9 +127,9 @@ class ReviewServiceTest {
     @Order(4)
     void delete() {
         System.out.println("=============================DELETE====================================");
-        boolean isDeleted = reviewService.delete(Long.valueOf(review2.getReviewID()));
+        boolean isDeleted = reviewService.delete(savedReview.getReviewID());
         assertEquals(true, isDeleted);
-        System.out.println("Review no:" + review2.getReviewID() + " Deleted");
+        System.out.println("Review no:" + savedReview.getReviewID() + " Deleted");
     }
 
     @Test

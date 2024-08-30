@@ -5,8 +5,8 @@ import za.ac.cput.util.Helper;
 
 
 public class CustomerFactory {
-    public static Customer buildCustomer(long customerId, String firstName,String middleName, String lastName, String password, Contact contact){
-        if(customerId<=0 || Helper.isStringNullorEmpty(firstName)|| Helper.isStringNullorEmpty(middleName)
+    public static Customer buildCustomer(String firstName,String middleName, String lastName, String password, Contact contact){
+        if( Helper.isStringNullorEmpty(firstName)|| Helper.isStringNullorEmpty(middleName)
                 || Helper.isStringNullorEmpty(lastName) || Helper.isStringNullorEmpty(password) ||
                 contact == null
         ){
@@ -18,14 +18,14 @@ public class CustomerFactory {
                 .setMiddleName(middleName)
                 .build();
         return new Customer.CustomerBuilder()
-                .setCustomerId(customerId)
+
                 .setName(name)
                 .setPassword(password)
                 .setContact(contact)
                 .build();
     }
-    public static Customer buildCustomer(long customerId, String firstName, String lastName, String password, Contact contact){
-        if(customerId<=0 || Helper.isStringNullorEmpty(firstName)
+    public static Customer buildCustomer( String firstName, String lastName, String password, Contact contact){
+        if(Helper.isStringNullorEmpty(firstName)
                 || Helper.isStringNullorEmpty(lastName) || Helper.isStringNullorEmpty(password) ||
                 contact == null
         ){
@@ -36,7 +36,7 @@ public class CustomerFactory {
                 .setLastName(lastName)
                 .build();
         return new Customer.CustomerBuilder()
-                .setCustomerId(customerId)
+
                 .setName(name)
                 .setPassword(password)
                 .setContact(contact)

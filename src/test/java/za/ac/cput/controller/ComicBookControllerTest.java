@@ -7,6 +7,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import za.ac.cput.domain.Author;
 import za.ac.cput.domain.ComicBook;
+import za.ac.cput.domain.Genre;
 import za.ac.cput.domain.Publisher;
 import za.ac.cput.factory.AuthorFactory;
 import za.ac.cput.factory.ComicBookFactory;
@@ -24,6 +25,7 @@ import java.io.Serial;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,10 +34,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ComicBookControllerTest {
     private final String BASE_URL = "http://localhost:8080/comiccity/comic_book";
-
-    @Autowired
-    private ComicBookService comicBookService;
-
 
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -66,6 +64,7 @@ class ComicBookControllerTest {
 
             image = ImageIO.read(new File(url));
             out = new ByteArrayOutputStream();
+
             ImageIO.write(image, "jpeg", out);
 
         } catch (IOException e) {
@@ -85,14 +84,16 @@ class ComicBookControllerTest {
 
         publisher1 = PublisherFactory.buildPublisher(34655L, "Marvel", 2000);
 
+        Set<Genre> genres1 = Set.of(Genre.FANTASY, Genre.SCI_FI);
+        Set<Genre> genres2 = Set.of(Genre.MYSTERY);
 
-        book1 = ComicBookFactory.bookBuilder("Thor", "Fantasy", "AsGuards Prince son of Zuis",
+
+        book1 = ComicBookFactory.bookBuilder("Thor", genres1, "AsGuards Prince son of Zuis",
                 "B01", 299.99, 2.00, 1, authors, publisher1, LocalDate.of(2022, 03, 04), photo);
-        book2 = ComicBookFactory.bookBuilder("Avatar", "Sci-Fi", "Two Dimension Worls Colliding into one.",
+        book2 = ComicBookFactory.bookBuilder("Avatar", genres2, "Two Dimension Worls Colliding into one.",
                 "B02", 199.99, 1.80, 1, authors, publisher1, LocalDate.of(2024, 03, 15), photo);
-        book3 = ComicBookFactory.bookBuilder("HALO", "Fantasy", "GALAXY 2000 years from now",
+        book3 = ComicBookFactory.bookBuilder("HALO", genres1, "GALAXY 2000 years from now",
                 "B03", 539.99, 3.50, 3, authors, publisher1, LocalDate.of(2021, 05, 30), photo);
-
 
     }
 
