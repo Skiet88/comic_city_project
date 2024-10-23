@@ -39,14 +39,17 @@ public class SecurityConfig {
                         // Public routes
                         .requestMatchers("/", "/auth/login", "/login", "/signUp").permitAll() // Public routes
                         .requestMatchers(HttpMethod.POST, "/Customer/create", "/Contact/create").permitAll() // Allow customer sign-up
+                        .requestMatchers(HttpMethod.GET,"/Customer/getByEmail/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/cart/assignCartToCustomer/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/cart/assignCartToCustomer/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/cart/getCustomerCart/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/wishList/assignWishListToCustomer/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/wishList/assignWishListToCustomer/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/comic_book/read/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/comic_book/search/name/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/comic_book/comic_book/search/**").permitAll()
-
+                        .requestMatchers(HttpMethod.POST, "/CustomerOrder/create/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,  "CustomerOrder/getCustomerOrders/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/comic_book/search/genres/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/comic_book/filter/publisher/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/comic_book/filter/price/**").permitAll()

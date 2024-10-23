@@ -45,7 +45,7 @@ class CustomerServiceTest {
         Address shippingAddress2 = ShippingAddressFactory.buildShippingAddress(LocalTime.of(9, 52), "33 sea Drive 2", "Kibbler park 2", "2092", "Johannesburg");
         System.out.println(shippingAddress);
 
-        Contact con1 = CustomerContactFactory.buildContact("leroy8@gmail.com", "0739946042", shippingAddress, billingAddress);
+        Contact con1 = CustomerContactFactory.buildContact("leroyk@gmail.com", "0739946042", shippingAddress, billingAddress);
         System.out.println(con1);
 
         Contact con2 = CustomerContactFactory.buildContact("jimmy2@gmail.com", "0739946042", shippingAddress2, billingAddress2);
