@@ -10,7 +10,6 @@ import CreateAccount from "@/components/CreateAccount.vue";
 
 import AddNewBook from "@/components/AddNewBook.vue";
 import AccountSidebar from "@/components/AccountSidebar.vue";
-import ordersPage from "@/components/OrdersPage.vue";
 import AccountDetails from "@/components/AccountDetails.vue";
 import AddressesPage from "@/components/AddressesPage.vue";
 import WishListPage from "@/components/WishListPage.vue";
@@ -25,6 +24,7 @@ import AddNewPublisher from "@/components/AddNewPublisher.vue";
 import EditPublisher from "@/components/EditPublisher.vue";
 import GenreManagment from "@/components/GenreManagment.vue";
 import axios from "axios";
+import OrderHistory from "@/components/OrderHistory.vue";
 
 const routes = [
     // Public routes (available to all users)
@@ -63,7 +63,7 @@ const routes = [
         children: [
             { path: '', redirect: 'account' }, // Redirect to account as default
             { path: 'account', name: 'Account', component: AccountSidebar }, // Customer account
-            { path: 'orders', name: 'Orders', component: ordersPage }, // Order history
+            { path: '/order-history', name: 'OrderHistory', component: OrderHistory }, // Order history
             { path: 'addresses', name: 'Addresses', component: AddressesPage }, // Manage addresses
             { path: 'account-details', name: 'AccountDetails', component: AccountDetails }, // Account details
             { path: 'wishlist', name: 'WishListPage', component: WishListPage }, // Wish list

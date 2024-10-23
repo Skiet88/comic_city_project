@@ -28,6 +28,7 @@
 import NavBar from '@/components/NavBar.vue';
 import FooterSection from '@/components/FooterSection.vue';
 import { getCustomerOrders } from '@/services/orderService';
+import {jwtDecode} from "jwt-decode";
 
 
 export default {
@@ -47,14 +48,14 @@ export default {
   },
   methods: {
     async fetchOrders() {
-      try {
-        const userEmail = localStorage.getItem('userEmail');
 
-          const response = await getCustomerOrders(userEmail);
+        const token = localStorage.getItem('authToken');
+        if (token) {
+          const decodedToken = jwtDecode(token);
+          this.isAuthenticated = true;
+
+          const response = await getCustomerOrders(decodedToken.sub);
           this.orders = response.data
-      } catch (error) {
-        console.error("Error fetching orders:", error);
-        alert("Failed to fetch orders.");
       }
     }
   }

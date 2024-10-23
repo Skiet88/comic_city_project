@@ -55,7 +55,7 @@
                 <ul>
                   <li><a href="#">Inbox</a></li>
                   <li><a href="#">Account</a></li>
-                  <router-link to="/order-history">My Orders</router-link>
+                  <li><a href="#" @click="orders">My Orders</a></li>
                   <li><a href="#">Help</a></li>
                   <li><a href="#" @click="logout">Logout</a></li>
                 </ul>
@@ -197,6 +197,10 @@ export default {
         this.$router.push('/');
       }
     },
+    orders() {
+
+        this.$router.push('/order-history');
+      },
     showCart() {
       this.isCartVisible = true;
     },
