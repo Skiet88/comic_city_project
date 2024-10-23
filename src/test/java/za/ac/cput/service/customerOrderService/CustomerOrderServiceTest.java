@@ -71,13 +71,17 @@ class CustomerOrderServiceTest {
         Address shippingAddress = ShippingAddressFactory.buildShippingAddress(LocalTime.of(9, 52), "34 Batersea Drive", "Kibbler park", "2091", "Johannesburg");
 
         Contact con1 = CustomerContactFactory.buildContact("leroyk@gmail.com", "0739946042", shippingAddress, billingAddress);
+        Contact con2 = CustomerContactFactory.buildContact("m@gmail.com", "0739946045", shippingAddress, billingAddress);
         Customer customer1 = customerService.read(1L);
-        if (customer1 == null) {
+        Customer customer2 = customerService.read(6L);
+        if (customer1 == null || customer2 == null) {
             customer1 = CustomerFactory.buildCustomer("Leroy", "Kulcha", "Liam", "Lkulcha123", con1);
-            customer1 = customerService.create(customer1);
+            customer2 = CustomerFactory.buildCustomer("Mbasa", "Avuyile", "Cabane", "M@123", con2);
+            customer2 = customerService.create(customer2);
         }
 
         customerOrder1 = CustomerOrderFactory.buildCustomerOrder(LocalDate.of(2022, 03, 04), comicBooks, customer1, 650.00, OrderStatus.PROCESSING);
+        customerOrder2 = CustomerOrderFactory.buildCustomerOrder(LocalDate.of(2022, 03, 04), comicBooks, customer2, 650.00, OrderStatus.PROCESSING);
     }
 
 
@@ -86,9 +90,9 @@ class CustomerOrderServiceTest {
     void create() {
         System.out.println("===========================CREATE========================================");
 
-        savedCustomerOrder = customerOrderService.create(customerOrder1);
+        savedCustomerOrder = customerOrderService.create(customerOrder2);
         assertNotNull(savedCustomerOrder);
-        System.out.println("Saved Order: " + customerOrder1);
+        System.out.println("Saved Order: " + customerOrder2);
     }
 
     @Test
@@ -127,5 +131,11 @@ class CustomerOrderServiceTest {
         boolean isDeleted = customerOrderService.delete(savedCustomerOrder.getOrderId());
         assertTrue(isDeleted);
         System.out.println("CustomerOrder no " + savedCustomerOrder.getOrderId() + " deleted");
+    }
+    @Test
+    @Order(5)
+    void getOrders(){
+        System.out.println("GETTING ALL CUSTOMER ORDERS");
+        System.out.println(customerOrderService.findCustomerOrdersByEmail("leroyk@gmail.com"));
     }
 }

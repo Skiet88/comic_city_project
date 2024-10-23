@@ -58,7 +58,7 @@ public class ComicBook {
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Column(name = "genre")
     private Set<Genre> genres;
 

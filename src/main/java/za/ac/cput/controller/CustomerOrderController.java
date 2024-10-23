@@ -53,4 +53,8 @@ public class CustomerOrderController {
         System.out.println("Entered get all");
         return customerOrderService.getall();
     }
+    @GetMapping("/getCustomerOrders/{email}")
+    public List<CustomerOrder> getCustomerOrders(@PathVariable String email) {
+        return customerOrderService.findCustomerOrdersByEmail(email);
+    }
 }

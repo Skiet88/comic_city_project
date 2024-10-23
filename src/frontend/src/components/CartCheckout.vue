@@ -66,8 +66,13 @@ import NavBar from '@/components/NavBar.vue';
 import CartSummary from '@/components/CartSummary.vue';
 import FooterSection from '@/components/FooterSection.vue';
 import { createOrder } from '@/services/orderService';
+
+import {getCustomerCart} from "@/services/cartService";
+import {jwtDecode} from "jwt-decode"; // Import the service for creating orders
+
 import CustomerService from "@/services/CustomerService";
 import {getCustomerCart} from "@/services/cartService";
+
 
 export default {
   name: 'CartCheckout',
@@ -95,16 +100,54 @@ export default {
     this.cartItems = this.$route.params.cartItems || [];
   },
   methods: {
+    // checkAuthStatus() {
+    //   const token = localStorage.getItem('authToken');
+    //   if (token) {
+    //     const decodedToken = jwtDecode(token);
+    //     this.isAuthenticated = true;
+    //
+    //     this.customer = CustomerService.fetchCustomerByEmail(decodedToken.sub);
+    //
+    //   }
+    //
+    // },
     checkAuthStatus() {
-      const userEmail = localStorage.getItem('userEmail');
-      if (userEmail) {
-        this.customer = CustomerService.fetchCustomerByEmail(userEmail);
+      const token = localStorage.getItem('authToken');
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        this.isAuthenticated = true;
 
+
+        fetch(`/api/comiccity/Customer/getByEmail/${decodedToken.sub}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          }
+        })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Failed to fetch user details');
+              }
+              return response.json();
+            })
+            .then(data => {
+              this.customer = data;
+              alert(this.customer);
+            })
+            .catch(error => {
+              console.error('Error fetching user details:', error);
+            });
       }
     },
     async placeOrder() {
-      const userEmail = localStorage.getItem('userEmail');
-      const response = await getCustomerCart(userEmail);
+      const token = localStorage.getItem('authToken');
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        this.isAuthenticated = true;
+
+
+      const response = await getCustomerCart(decodedToken.sub);
       this.cart = response.data;
       this.cartItems = this.cart.comicBooks || [];
       const orderData = {
@@ -125,6 +168,7 @@ export default {
       } catch (error) {
         alert('Failed to place order.');
         console.error('Error placing order:', error);
+      }
       }
     },
 

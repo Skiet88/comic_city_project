@@ -2,6 +2,7 @@ package za.ac.cput.service.customerOrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import za.ac.cput.domain.Author;
 import za.ac.cput.domain.ComicBook;
 import za.ac.cput.domain.Customer;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 @Service
 public class CustomerOrderService implements ICustomerOrderService {
 
+    @Autowired
     private CustomerOrderRepository customerOrderRepository;
 
     private CustomerService customerService;
@@ -110,5 +112,9 @@ public class CustomerOrderService implements ICustomerOrderService {
     @Override
     public List<CustomerOrder> getall() {
         return customerOrderRepository.findAll();
+    }
+
+    public List<CustomerOrder> findCustomerOrdersByEmail(String email) {
+        return customerOrderRepository.findCustomerOrdersByCustomer_ContactEmail(email);
     }
 }
