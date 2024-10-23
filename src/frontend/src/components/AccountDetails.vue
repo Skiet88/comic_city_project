@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     saveAccountDetails() {
-      // Logic to save account details
+
       console.log('Account details saved:', {
         firstName: this.firstName,
         lastName: this.lastName,
@@ -59,7 +59,6 @@ export default {
       });
     },
     cancel() {
-      // Logic to reset form fields
       this.firstName = '';
       this.lastName = '';
       this.displayName = '';
@@ -148,4 +147,3 @@ export default {
   background-color: #333;
 }
 </style>
-//sethu

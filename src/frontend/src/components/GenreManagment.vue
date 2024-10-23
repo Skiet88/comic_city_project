@@ -135,7 +135,7 @@ export default {
 </script>
 
 <style scoped>
-/* Apply the same styles from Comic Book Management to Genre Management */
+
 .table-container {
   width: 100%;
   max-width: 1000px;

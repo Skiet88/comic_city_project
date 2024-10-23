@@ -13,6 +13,8 @@ import za.ac.cput.repository.CustomerRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class AuthorService implements IAuthorService{
@@ -47,5 +49,16 @@ public class AuthorService implements IAuthorService{
     @Override
     public List<Author> getAll() {
         return repo.findAll();
+    }
+
+    public List<Author> searchByName(String name) {
+
+        List<Author> firstNameResults = repo.findByName_FirstNameContainingIgnoreCase(name);
+        List<Author> lastNameResults = repo.findByName_LastNameContainingIgnoreCase(name);
+
+
+        return Stream.concat(firstNameResults.stream(), lastNameResults.stream())
+                .distinct()
+                .collect(Collectors.toList());
     }
 }

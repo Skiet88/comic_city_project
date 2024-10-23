@@ -21,3 +21,7 @@ export const deleteAuthor = (authorID) => {
 export const getAllAuthors = () => {
     return axios.get(`${API_URL}/getAll`);
 };
+
+export const searchAuthorsByName = (name) => {
+    return axios.get(`${API_URL}/searchByName/${name}`);
+};

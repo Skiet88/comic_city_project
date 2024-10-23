@@ -50,14 +50,14 @@ class CustomerOrderServiceTest {
         authors.add(author2);
 
         Genre sciFi = genreService.read(1L);
-        if (sciFi == null) {
-            sciFi = genreService.create(GenreFactory.buildGenre("Sci-Fi"));
-        }
+//        if (sciFi == null) {
+//            sciFi = genreService.create(GenreFactory.buildGenre("Sci-Fi"));
+//        }
 
         Genre action = genreService.read(2L);
-        if (action == null) {
-            action = genreService.create(GenreFactory.buildGenre("Action"));
-        }
+//        if (action == null) {
+//            action = genreService.create(GenreFactory.buildGenre("Action"));
+//        }
 
         Set<Genre> genres1 = Set.of(sciFi, action);
 

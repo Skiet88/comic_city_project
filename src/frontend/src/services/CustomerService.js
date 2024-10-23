@@ -1,6 +1,6 @@
 class CustomerService {
     constructor() {
-    this.apiUrl = '/api/comiccity/Customer'; // Base URL for the API, assuming you're using a proxy
+    this.apiUrl = '/api/comiccity/Customer';
 }
 
     async request(url, options) {

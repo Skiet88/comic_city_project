@@ -241,6 +241,10 @@ export default {
         alert('At least one author is required.');
         return false;
       }
+      if (this.selectedGenres.length === 0) {
+        alert('At least one genre is required.');
+        return false;
+      }
       return true;
     },
     async handleSubmit() {
@@ -272,7 +276,7 @@ export default {
       console.log('ComicBook Data Being Submitted:', comicBookData);
 
       try {
-        // Submit comic book data
+
         let response = await createComicBook(comicBookData);
 
 

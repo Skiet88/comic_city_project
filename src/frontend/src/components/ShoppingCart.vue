@@ -2,7 +2,6 @@
   <div :class="themeClass">
     <NavBar/>
 
-    <!-- Shopping Cart -->
     <div class="shopping-cart dark-theme">
       <h2>Your Shopping Cart</h2>
       <div v-if="cartItems.length">
@@ -149,11 +148,11 @@ export default {
 
 <style scoped>
 
-/* Shopping Cart Styles */
+
 .shopping-cart {
   padding: 20px;
-  background-color: #2c2c2c; /* Darker background for contrast */
-  color: #f0f0f0; /* Lighter text color for readability */
+  background-color: #2c2c2c;
+  color: #f0f0f0;
   max-width: 1000px;
   margin: 0 auto;
   border-radius: 8px;
@@ -168,7 +167,7 @@ export default {
 
 .cart-table th, .cart-table td {
   padding: 15px;
-  border-bottom: 1px solid #444; /* Darker border for table rows */
+  border-bottom: 1px solid #444;
   text-align: left;
 }
 
@@ -189,7 +188,7 @@ export default {
 }
 
 .quantity-controls button {
-  background-color: #ff5722; /* Orange button background */
+  background-color: #ff5722;
   color: white;
   border: none;
   padding: 5px;
@@ -213,7 +212,7 @@ export default {
 }
 
 .checkout-button {
-  background-color: #ff5722; /* Orange button background */
+  background-color: #ff5722;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -222,10 +221,10 @@ export default {
 }
 
 .checkout-button:hover {
-  background-color: #e64a19; /* Darker orange for hover effect */
+  background-color: #e64a19;
 }
 
-/* Dark Theme Adjustments */
+
 .dark-theme .shopping-cart {
   background-color: #1b1b1b;
   color: white;

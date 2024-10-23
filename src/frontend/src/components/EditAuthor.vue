@@ -142,7 +142,7 @@ export default {
         await updateAuthor(this.author);
         this.successMessage = "Author updated successfully!";
         console.log('Author updated successfully:', this.author);
-        this.$router.push(`/authors`);
+        this.$router.push({ name: 'Authors'});
       } catch (error) {
         console.error('Error updating author:', error);
         this.errorMessage = "Failed to update author.";

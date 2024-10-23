@@ -38,7 +38,7 @@ export default {
     comic: Object,
     wishlist: {
       type: Array,
-      default: () => []  // Ensure default is an empty array
+      default: () => []
     }
   },
   computed: {
@@ -69,10 +69,10 @@ export default {
       return `R${price.toFixed(2)}`;
     },
     handleAddToCart() {
-      this.$emit('add-to-cart', this.comic.sku); // Emit the comic SKU (or ID)
+      this.$emit('add-to-cart', this.comic.sku);
     },
     toggleWishlist() {
-      this.$emit('toggle-wishlist', this.comic.sku); // Emit the comic SKU for wishlist toggle
+      this.$emit('toggle-wishlist', this.comic.sku);
     },
 
       selectComic() {
@@ -82,7 +82,7 @@ export default {
 };
 </script>
 <style scoped>
-/* Your existing styles */
+
 .comic-card {
   position: relative;
   border: 1px solid #ddd;
@@ -91,7 +91,7 @@ export default {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 300px;
-  height: 480px; /* Adjusted height for more space */
+  height: 480px;
   box-sizing: border-box;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
@@ -115,17 +115,17 @@ export default {
   top: 8px;
   right: 8px;
   font-size: 30px;
-  color: rgba(0, 0, 0, 0.38); /* Default icon color */
-  background-color: white; /* Transparent background */
-  border-radius: 50%; /* Circular border */
-  padding: 4px; /* Padding for the border */
+  color: rgba(0, 0, 0, 0.38);
+  background-color: white;
+  border-radius: 50%;
+  padding: 4px;
   box-sizing: content-box;
   cursor: pointer;
 }
 
 
 .heart-icon.active {
-  color: red; /* Red color for active state */
+  color: red;
 }
 
 .heart-icon:hover {
@@ -134,7 +134,7 @@ export default {
 
 .comic-info {
   margin-top: 10px;
-  flex-grow: 1; /* Makes the info section take up remaining space */
+  flex-grow: 1;
 }
 
 .title-price {
@@ -149,8 +149,8 @@ export default {
   font-weight: bold;
   margin: 0;
   flex: 1 1 auto;
-  flex-grow: 1; /* Allow title to take available space */
-  white-space: nowrap; /* Prevent title from wrapping */
+  flex-grow: 1;
+  white-space: nowrap;
   max-width: 70%;
 }
 
@@ -191,9 +191,9 @@ export default {
   font-size: 1.1rem;
   font-weight: bold;
   transition: background-color 0.3s ease;
-  align-self: center; /* Center the button horizontally */
-  margin-bottom: 20px; /* Add space below the button */
-  margin: 20px auto 0 auto; /* Center the button horizontally */
+  align-self: center;
+  margin-bottom: 20px;
+  margin: 20px auto 0 auto;
   display: block;
 }
 

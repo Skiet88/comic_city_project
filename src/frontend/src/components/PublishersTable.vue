@@ -58,7 +58,8 @@
 
 <script>
 
-import {getAllPublishers} from "@/services/PublisherService";
+import {deletePublisher, findPublishersByName, getAllPublishers} from "@/services/PublisherService";
+
 
 export default {
 
@@ -71,23 +72,23 @@ export default {
     };
   },
   methods: {
-    fetchPublishersByName() {
+    async fetchPublishersByName() {
       if (!this.searchName) {
-        this.fetchAllPublishers();
+        await this.fetchAllPublishers();
         return;
       }
       this.loading = true;
-      fetch(`/api/comiccity/publisher/search/name/${this.searchName}`)
-          .then((response) => response.json())
-          .then((data) => {
-            this.authors = data;
-            this.loading = false;
-          })
-          .catch((error) => {
-            this.errorMsg = 'Error fetching data by name';
-            this.loading = false;
-            console.error(error);
-          });
+      try {
+        const response = await findPublishersByName(this.searchName);
+        this.publishers = response.data;
+        this.loading = false;
+      } catch (error) {
+        this.errorMsg = 'Error fetching data by name';
+        console.error(error);
+      } finally {
+        this.loading = false;
+        }
+
     },
 
 
@@ -107,32 +108,24 @@ export default {
       }
     },
 
-    editPublisher(id) {
-      this.$router.push(`/edit-publisher/${id}`);
+    editPublisher(publisherID) {
+      this.$router.push({ name: 'EditPublisher', params: { id: publisherID } });
+
     },
 
-    confirmDelete(publisherId) {
-      const confirmed = confirm('Are you sure you want to delete this publisher?');
-      if (confirmed) {
-        this.deleteAuthor(publisherId);
+    async confirmDelete(publisherId) {
+      try {
+        const confirmed = confirm('Are you sure you want to delete this comic book?');
+        if (confirmed) {
+          await deletePublisher(publisherId);
+          this.publishers = this.publishers.filter((publisher) => publisher.publisherId !== publisherId);
+        }
+      } catch (error) {
+        console.error('Error deleting publisher book:', error);
       }
     },
 
-    deleteAuthor(publisherId) {
-      fetch(`api/comiccity/author/delete/${publisherId}`, {
-        method: 'DELETE',
-      })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            this.publishers = this.publishers.filter((publisher) => publisher.publisherId !== publisherId);
-          })
-          .catch((error) => {
-            this.errorMsg = 'Error deleting the publisher';
-            console.error('There was a problem with the delete operation:', error);
-          });
-    },
+  
 
     AddNewPublisher() {
       this.$router.push({ name: 'AddNewPublisher' });

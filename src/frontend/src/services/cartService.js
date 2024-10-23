@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/comiccity/cart'; // Adjust the base URL as needed
+const API_URL = 'http://localhost:8080/comiccity/cart';
 
 export const createCart = (cart) => {
     return axios.post(`${API_URL}/create`, cart);

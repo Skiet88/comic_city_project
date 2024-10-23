@@ -1,7 +1,7 @@
 <template>
   <div class="no-bootstrap-affect">
     <nav class="navbarr">
-      <!-- Top Section -->
+
       <div class="top-section">
         <div class="left-side">
           <font-awesome-icon icon="facebook" class="icon social-icon" />
@@ -14,10 +14,9 @@
         </div>
       </div>
 
-      <!-- Horizontal Line -->
+
       <hr class="section-divider" />
 
-      <!-- Middle Section -->
       <div class="middle-section">
         <div class="logo">
           <router-link to='/'>
@@ -31,21 +30,18 @@
             <font-awesome-icon icon="search" class="icon1" />
           </label>
 
-          <!-- Cart Icon Wrapper -->
           <div class="relative cart-icon-wrapper" @click="showCart" @mouseenter="showCart" @mouseleave="hideCart">
             <font-awesome-icon icon="shopping-cart" class="icon cart-icon" />
             <div class="cart-badge">{{ cartItemCount }}</div>
             <CartSummary v-if="isCartVisible" @update-cart-count="updateCartCount" />
           </div>
 
-          <!-- Wishlist Icon Wrapper -->
           <div class="relative wishlist-icon-wrapper" @click="showWishlist" @mouseenter="showWishlist" @mouseleave="hideWishlist">
             <font-awesome-icon icon="heart" class="icon wishlist-icon" />
             <div class="cart-badge">{{ wishListItemCount }}</div>
             <WishlistSummary v-if="isWishlistVisible" @update-wishList-count="updateWishListCount" :wishListId="wishListId" />
           </div>
 
-          <!-- Conditionally Render User Icon or Login | Sign Up -->
           <div v-if="isAuthenticated">
             <div class="user-info" @click.stop="toggleDropdown">
               <font-awesome-icon icon="user" class="icon" />
@@ -73,10 +69,8 @@
         </div>
       </div>
 
-      <!-- Horizontal Line -->
       <hr class="section-divider" />
 
-      <!-- Bottom Section with Dropdown Menus -->
       <div class="bottom-section">
         <ul class="bottom-nav-links">
           <router-link to="/">
@@ -85,7 +79,6 @@
             </a></li>
           </router-link>
 
-          <!-- Shop by Genre with Dropdown -->
           <li class="dropdown" @mouseenter="showDropdown('genre')" @mouseleave="hideDropdown('genre')">
             <a href="#">Shop by Genre
               <font-awesome-icon icon="chevron-up" class="icon arrow-icon" />
@@ -97,7 +90,6 @@
               <li><a href="#">Horror</a></li>
             </ul>
           </li>
-          <!-- Shop by Publisher with Dropdown -->
           <li class="dropdown" @mouseenter="showDropdown('publisher')" @mouseleave="hideDropdown('publisher')">
             <a href="#">Shop by Publisher
               <font-awesome-icon icon="chevron-up" class="icon arrow-icon" />

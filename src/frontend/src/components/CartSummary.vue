@@ -3,16 +3,13 @@
     <h2>Cart</h2>
     <div v-if="cartItems.length > 0">
       <div v-for="item in cartItems" :key="item.sku" class="cart-item">
-        <!-- Remove Button -->
         <div class="remove-item" @click="removeItem(item.sku)">×</div>
 
-        <!-- Item Image -->
         <div
             class="cart-item-image"
             :style="{ backgroundImage: `url(${getPhotoUrl(item.photo)})` }"
         ></div>
 
-        <!-- Item Details -->
         <div class="cart-item-details">
           <p class="text-base">{{ item.name }}</p>
           <p class="text-sm">{{ item.price }} • {{ item.quantity }}</p>
@@ -74,10 +71,10 @@ export default {
         try {
           const response = await getCustomerCart(decodedToken.sub);
           this.cart = response.data;
-          this.cartItems = this.cart.comicBooks || []; // Safely assign cart items
+          this.cartItems = this.cart.comicBooks || [];
           this.cartTotal = this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
-          // Emit the cart item count to the parent component
+
           this.$emit('update-cart-count', this.cartItems.length);
         } catch (error) {
           console.error('Error fetching cart items:', error);
@@ -102,7 +99,6 @@ export default {
       return `data:image/jpeg;base64,${photo}`;
     },
     formatPrice(price) {
-      // Format the price as a string with the currency symbol
       return `R${price.toFixed(2)}`;
     }
   }
@@ -111,7 +107,7 @@ export default {
 
 
 <style scoped>
-/* Cart Summary styles */
+
 .cart-summary {
   display: block;
   position: absolute;
@@ -131,7 +127,7 @@ export default {
   background-color: #2a3a4b;
   padding: 0.75rem;
   border-bottom: 1px solid #444;
-  position: relative; /* Needed for positioning the remove button */
+  position: relative;
 }
 
 .cart-item:last-child {
@@ -192,7 +188,7 @@ export default {
   cursor: pointer;
 }
 
-/* Remove Button styles */
+
 .remove-item {
   position: absolute;
   top: -8px;

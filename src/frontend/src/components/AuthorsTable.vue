@@ -59,7 +59,8 @@
 <script>
 
 
-import {getAllAuthors} from "@/services/AuthorService";
+import {deleteAuthor, getAllAuthors, searchAuthorsByName} from "@/services/AuthorService";
+
 
 export default {
 
@@ -72,23 +73,21 @@ export default {
     };
   },
   methods: {
-    fetchAuthorsByName() {
+    async fetchAuthorsByName() {
       if (!this.searchName) {
-        this.fetchAllAuthors();
+        await this.fetchAllAuthors();
         return;
       }
       this.loading = true;
-      fetch(`/api/comiccity/author/search/name/${this.searchName}`)
-          .then((response) => response.json())
-          .then((data) => {
-            this.authors = data;
-            this.loading = false;
-          })
-          .catch((error) => {
-            this.errorMsg = 'Error fetching data by name';
-            this.loading = false;
-            console.error(error);
-          });
+      try {
+        const response = await searchAuthorsByName(this.searchName);
+        this.authors = response.data;
+        this.loading = false;
+      } catch (error) {
+        this.errorMsg = 'Error fetching data by name';
+      } finally {
+        this.loading = false;
+      }
     },
 
 
@@ -112,14 +111,19 @@ export default {
       }
     },
 
-    editAuthor(id) {
-      this.$router.push(`/edit-author/${id}`);
+    editAuthor(AuthorID) {
+      this.$router.push({ name: 'EditAuthor', params: { id: AuthorID } });
     },
 
-    confirmDelete(authorId) {
-      const confirmed = confirm('Are you sure you want to delete this author?');
-      if (confirmed) {
-        this.deleteAuthor(authorId);
+    async confirmDelete(authorId) {
+      try {
+        const confirmed = confirm('Are you sure you want to delete this comic book?');
+        if (confirmed) {
+          await deleteAuthor(authorId);
+          this.authors = this.authors.filter((author) => author.authorID !== authorId);
+        }
+      } catch (error) {
+        console.error('Error deleting publisher book:', error);
       }
     },
 
@@ -159,7 +163,7 @@ export default {
 </script>
 
 <style scoped>
-/* Retained original styles for table and other components */
+
 .table-container {
   width: 100%;
   max-width: 1000px;

@@ -2,7 +2,6 @@
   <div class="filter-container">
     <h3>Filter By</h3>
 
-    <!-- Price Filter -->
     <div class="filter-group">
       <h4>Price</h4>
       <div class="price-slider-container">
@@ -21,7 +20,6 @@
       </div>
     </div>
 
-    <!-- Genre Filter -->
     <div class="filter-group">
       <h4>Genre</h4>
       <select v-model="selectedGenre">
@@ -30,7 +28,6 @@
       </select>
     </div>
 
-    <!-- Release Date Filter -->
     <div class="filter-group">
       <h4>Release Date</h4>
       <div class="date-range">
@@ -45,7 +42,6 @@
       </div>
     </div>
 
-    <!-- Publisher Filter -->
     <div class="filter-group">
       <h4>Publisher</h4>
       <select v-model="selectedPublisher">
@@ -81,7 +77,6 @@ export default {
 
   methods: {
     updatePriceRange() {
-      // No need for logic here for a single slider
     },
 
     async loadGenres() {
@@ -104,7 +99,7 @@ export default {
 
     applyFilters() {
       this.$emit("filter", {
-        minPrice: 0, // Fixed min price
+        minPrice: 0,
         maxPrice: this.maxPrice,
         genre: this.selectedGenre ? this.selectedGenre : null,
         releaseDateFrom: this.selectedReleaseDateFrom || null,
@@ -125,8 +120,8 @@ export default {
   padding: 10px;
   border: 1px solid #ccc;
   margin-bottom: 20px;
-  width: 250px; /* Adjust width as needed */
-  margin-top: 20px; /* Margin to avoid touching the banner */
+  width: 250px;
+  margin-top: 20px;
   margin-left: 10px;
   border-radius: 10px;
 }
@@ -135,17 +130,17 @@ export default {
   margin-bottom: 20px;
 }
 .filter-group select{
-  padding: 10px; /* Added padding for larger combo boxes */
-  font-size: 16px; /* Increased font size */
-  width: 95%; /* Make the select element full width */
-  height: 40px; /* Increased height for better usability */
-  border-radius: 4px; /* Rounded corners for a better appearance */
-  border: 1px solid #ccc; /* Border color for better visibility */
+  padding: 10px;
+  font-size: 16px;
+  width: 95%;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
 
 .price-slider-container {
   position: relative;
-  height: 60px; /* Adjust height as needed */
+  height: 60px;
 }
 
 .price-slider {
@@ -175,23 +170,23 @@ export default {
 .date-range input {
   margin-top: 5px;
   margin-left: 5px;
-  padding: 10px; /* Added padding for larger input fields */
-  font-size: 16px; /* Increased font size */
-  width: 200px; /* Increased width of date inputs */
+  padding: 10px;
+  font-size: 16px;
+  width: 200px;
 }
 
 button {
-  background-color: #007bff; /* Bootstrap primary color */
+  background-color: #007bff;
   color: #fff;
   border: none;
-  padding: 15px; /* Increased padding for button */
-  border-radius: 6px; /* Increased border radius for a more rounded button */
+  padding: 15px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 16px; /* Increased font size */
-  width: 56%; /* Full width button */
+  font-size: 16px;
+  width: 56%;
 }
 
 button:hover {
-  background-color: #0056b3; /* Darker shade for hover effect */
+  background-color: #0056b3;
 }
 </style>

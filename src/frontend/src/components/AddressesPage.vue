@@ -36,7 +36,7 @@ export default {
   name: 'AddressesPage',
   data() {
     return {
-      billingAddress: null // This will store the fetched billing address
+      billingAddress: null
     };
   },
   methods: {
@@ -47,10 +47,9 @@ export default {
       this.$router.push('/shipping-address');
     },
     fetchBillingAddress() {
-      // Fetch the billing address from the backend
       axios.get('/billing_address/get')
           .then(response => {
-            this.billingAddress = response.data; // Assuming response contains a single billing address
+            this.billingAddress = response.data;
           })
           .catch(error => {
             console.error('Error fetching billing address:', error);
@@ -58,7 +57,7 @@ export default {
     }
   },
   mounted() {
-    this.fetchBillingAddress(); // Fetch billing address when the page loads
+    this.fetchBillingAddress();
   }
 };
 </script>

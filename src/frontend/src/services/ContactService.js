@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/comiccity/Contact'; // Adjust the base URL as needed
+const API_URL = 'http://localhost:8080/comiccity/Contact';
 
 export const createContact = (contact) => {
     return axios.post(`${API_URL}/create`, contact);

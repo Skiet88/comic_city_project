@@ -12,7 +12,7 @@
           <div class="dropdown">
             <a class="d-flex align-items-center text-light text-decoration-none dropdown-toggle" href="#" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
               <img src="@/assets/profile.png" alt="User Profile" style="width: 40px; height: 40px; border-radius: 50%;">
-              <span class="ms-2">Me</span>
+              <span class="ms-2"></span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser1">
               <li><a class="dropdown-item" href="#" aria-label="Profile">Profile</a></li>
@@ -38,7 +38,6 @@
             <router-link class="nav-link text-light" to="/admin-layout/publishers">Publishers</router-link>
           </li>
         </ul>
-        <!-- Fixed Logout Button -->
         <div class="logout-button mt-auto p-3">
           <button class="btn btn-danger w-100" aria-label="Logout" @click = "logout" >Logout</button>
         </div>
@@ -166,12 +165,5 @@ header img {
   width: 100%;
 }
 
-
-
-
-/*
-.sidebar .nav-link:hover {
-  transform: scale(1.1) rotate(-5deg);
-}*/
 
 </style>

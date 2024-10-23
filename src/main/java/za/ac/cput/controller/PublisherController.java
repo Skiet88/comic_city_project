@@ -31,11 +31,16 @@ public class PublisherController {
     @DeleteMapping("/delete/{id}")
     public boolean delete(@PathVariable long id){
         return service.delete(id);
-
     }
 
     @GetMapping("/getall")
     public List<Publisher> getall(){
         return service.getall();
     }
+
+    @GetMapping("/findByName/{name}")
+    public List<Publisher> findByName(@PathVariable("name") String name){
+        return service.findByName(name);
+    }
+
 }

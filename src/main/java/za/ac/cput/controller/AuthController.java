@@ -16,7 +16,7 @@ import za.ac.cput.service.UserService.UserService;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3000") // Adjust as needed for frontend origin
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
 
     @Autowired
@@ -53,7 +53,7 @@ public class AuthController {
             String role = userDetails.getAuthorities().stream()
                     .findFirst()
                     .map(grantedAuthority -> grantedAuthority.getAuthority())
-                    .orElse("ROLE_USER"); // Default role if none found
+                    .orElse("ROLE_USER");
             System.out.println("role:" + role);
             // Generate JWT token
             String jwtToken = jwtService.generateToken(userDetails.getUsername(), role);
@@ -73,7 +73,7 @@ public class AuthController {
                     redirectUrl = "/home";
             }
 
-            // Create AuthResponse using the builder pattern
+
             AuthResponse authResponse = new AuthResponse.Builder()
                     .setToken(jwtToken)
                     .setRole(role)

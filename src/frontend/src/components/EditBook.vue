@@ -214,8 +214,8 @@ export default {
           await updateComicBook(this.comicBook);
         }
         this.successMessage = "Comic book saved successfully!";
-        console.log('Comic book updated successfully:', this.comicBook);
-        this.$router.push(`/comic-books`);
+        alert('Comic book updated successfully:');
+        this.$router.push({ name: 'ComicBooks'});
       } catch (error) {
         console.error('Error updating comic book:', error);
         this.errorMessage = "Failed to update comic book.";

@@ -21,5 +21,7 @@ export const deletePublisher = (publisherId) => {
 export const getAllPublishers = () => {
     return axios.get(`${API_URL}/getall`);
 };
-
+export const findPublishersByName = (name) => {
+    return axios.get(`${API_URL}/findByName/${name}`);
+};
 

@@ -66,8 +66,13 @@ import NavBar from '@/components/NavBar.vue';
 import CartSummary from '@/components/CartSummary.vue';
 import FooterSection from '@/components/FooterSection.vue';
 import { createOrder } from '@/services/orderService';
+
 import {getCustomerCart} from "@/services/cartService";
 import {jwtDecode} from "jwt-decode"; // Import the service for creating orders
+
+import CustomerService from "@/services/CustomerService";
+import {getCustomerCart} from "@/services/cartService";
+
 
 export default {
   name: 'CartCheckout',

@@ -52,12 +52,12 @@ export default {
       suburb: '',
       city: '',
       postalCode: '',
-      shippingAddresses: [] // To store fetched shipping addresses
+      shippingAddresses: []
     };
   },
   methods: {
     saveShippingAddress() {
-      // Create an object to represent the shipping address
+
       const shippingAddress = {
         streetAddress: this.streetAddress,
         suburb: this.suburb,
@@ -65,7 +65,6 @@ export default {
         postalCode: this.postalCode
       };
 
-      // Use axios to send a POST request to create the shipping address
       axios.post('/shipping_address/create', shippingAddress)
           .then(response => {
             console.log('Shipping address saved:', response.data);
@@ -75,14 +74,13 @@ export default {
             console.error('There was an error saving the shipping address:', error);
           });
 
-      // Reset form
+
       this.streetAddress = '';
       this.suburb = '';
       this.city = '';
       this.postalCode = '';
     },
     fetchShippingAddresses() {
-      // Use axios to senda GET request to fetch all shipping addresses
       axios.get('/shipping_address/getall')
           .then(response => {
             this.shippingAddresses = response.data;
@@ -93,7 +91,7 @@ export default {
           });
     },
     cancel() {
-      // Logic to cancel and reset the form
+
       this.streetAddress = '';
       this.suburb = '';
       this.city = '';
@@ -101,7 +99,7 @@ export default {
     }
   },
   mounted() {
-    this.fetchShippingAddresses(); // Fetch shipping addresses when the component is mounted
+    this.fetchShippingAddresses();
   }
 };
 </script>
@@ -113,7 +111,7 @@ export default {
 }
 
 .main-content {
-  width: 100%; /* Use full width */
+  width: 100%;
   padding-left: 20px;
 }
 

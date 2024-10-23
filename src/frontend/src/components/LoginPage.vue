@@ -92,7 +92,7 @@ export default {
           }
 
           await this.$router.push(redirectUrl);
-          //  await this.$router.push('/dashboard'); // Redirect to a general dashboard
+
         } else {
           alert('Login failed: ' + response.statusText);
         }

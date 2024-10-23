@@ -97,7 +97,7 @@
         <td>{{ book.quantity }}</td>
         <td class="actions">
           <button @click="editBook(book.sku)">Edit</button>
-          <button @click="confirmDelete(book.sku)" class="delete">Delete</button>
+          <button @click="deleteComic(book.sku)" class="delete">Delete</button>
         </td>
       </tr>
 
@@ -114,6 +114,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 import { getAllGenre } from "@/services/GenreService";
+import {
+  deleteComicBook,
+  getComicBooksByGenres,
+  getComicBooksByReleaseDates,
+  searchComicBooksByName
+} from "@/services/comicBookService";
 
 
 export default {
@@ -161,23 +167,21 @@ export default {
       }
     },
 
-    fetchBooksByName() {
+    async fetchBooksByName() {
       if (!this.searchName) {
         this.fetchAllBooks();
         return;
       }
       this.loadingBooks = true;
-      fetch(`/api/comiccity/comic_book/search/name/${this.searchName}`)
-          .then((response) => response.json())
-          .then((data) => {
-            this.books = data;
-            this.loadingBooks = false;
-          })
-          .catch((error) => {
-            this.errorMsg = 'Error fetching data by name';
-            this.loadingBooks = false;
-            console.error(error);
-          });
+      try {
+        const response = await searchComicBooksByName(this.searchName);
+        this.books = response.data;
+      } catch (error) {
+        this.loadingBooks = false;
+        console.error('Error searching by name:', error);
+      }finally {
+        this.loadingGenres = false;
+      }
     },
 
     async fetchBooksByReleaseDate() {
@@ -191,21 +195,23 @@ export default {
       }
       this.loadingBooks = true;
 
+      try {
+        if (this.startDate && this.endDate) {
+          const response = await getComicBooksByReleaseDates(this.startDate, this.endDate);
+          this.books = response.data;
+          this.loadingBooks = true;
+        } else {
+          alert('Please enter both start and end dates');
+        }
+      } catch (error) {
+        console.error('Error filtering by release dates:', error);
+      }finally {
+        this.loadingGenres = false;
+      }
 
-      fetch(`/api/comiccity/comic_book/search/releaseDates?startDate=${this.startDate}&endDate=${this.endDate}`)
-          .then((response) => response.json())
-          .then((data) => {
-            this.books = data;
-            this.loadingBooks = false;
-          })
-          .catch((error) => {
-            this.errorMsg = 'Error fetching data by release date';
-            this.loadingBooks = false;
-            console.error(error);
-          });
     },
 
-    fetchBooksByGenres() {
+    async fetchBooksByGenres() {
       if (this.selectedGenres.length === 0) {
         this.fetchAllBooks();
         return;
@@ -216,50 +222,36 @@ export default {
       const genreNames = this.selectedGenres.map(genre => genre);
       const genresParam = genreNames.join(',');
 
-      fetch(`/api/comiccity/comic_book/search/genres?genres=${genresParam}`)
-          .then((response) => response.json())
-          .then((data) => {
-            this.books = data;
-            this.loadingBooks = false;
-          })
-          .catch((error) => {
-            this.errorMsg = 'Error fetching data by genres';
-            this.loadingBooks = false;
-            console.error(error);
-          });
+      try {
+        const response = await getComicBooksByGenres(genresParam);
+        this.books = response.data;
+      } catch (error) {
+        this.errorMsg = 'Error fetching data by genre';
+        console.error(error);
+      } finally {
+        this.loadingBooks = false;
+      }
     },
 
 
-    editBook(id) {
-      this.$router.push(`/edit-book/${id}`);
+    editBook(BookID) {
+      this.$router.push({ name: 'EditBook', params: { id: BookID } });
     },
 
     toGenres() {
       this.$router.push({ name: 'genres' });
     },
 
-    confirmDelete(bookId) {
-      const confirmed = confirm('Are you sure you want to delete this book?');
-      if (confirmed) {
-        this.deleteComic(bookId);
+    async deleteComic(bookId) {
+      try {
+        const confirmed = confirm('Are you sure you want to delete this comic book?');
+        if (confirmed) {
+          await deleteComicBook(bookId);
+          this.fetchAllBooks();
+        }
+      } catch (error) {
+        console.error('Error deleting comic book:', error);
       }
-    },
-
-
-    deleteComic(bookId) {
-      fetch(`api/comiccity/comic_book/delete/${bookId}`, {
-        method: 'DELETE',
-      })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            this.books = this.books.filter((book) => book.sku !== bookId);
-          })
-          .catch((error) => {
-            this.errorMsg = 'Error deleting the book';
-            console.error('There was a problem with the delete operation:', error);
-          });
     },
 
     AddNewBook() {

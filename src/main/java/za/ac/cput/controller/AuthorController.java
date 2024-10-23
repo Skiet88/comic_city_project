@@ -45,5 +45,9 @@ public class AuthorController {
         return authorService.getAll();
     }
 
+    @GetMapping("/searchByName/{name}")
+    public List<Author> searchByName(@PathVariable("name")   String name){
+        return authorService.searchByName(name);
+    }
 
 }

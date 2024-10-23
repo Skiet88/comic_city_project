@@ -119,7 +119,7 @@ export default {
         const response=await getCustomerCart(this.userEmail);
         this.cart = response.data;
         this.cartItems=this.cart.comicBooks||[];
-        await addBookToCart(this.cart.cartId, item.sku); // Send the correct SKU to the API
+        await addBookToCart(this.cart.cartId, item.sku);
         alert(`${item.name} has been added to your cart!`);
 
       } catch (error) {

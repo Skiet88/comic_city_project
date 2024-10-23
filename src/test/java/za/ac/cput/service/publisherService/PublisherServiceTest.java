@@ -83,4 +83,11 @@ class PublisherServiceTest {
         System.out.println("===========================GETALL========================================");
         System.out.println(service.getall());
     }
+
+    @Test
+    @Order(5)
+    void getallByNames() {
+        System.out.println("===========================GETALL========================================");
+        System.out.println(service.findByName("z"));
+    }
 }

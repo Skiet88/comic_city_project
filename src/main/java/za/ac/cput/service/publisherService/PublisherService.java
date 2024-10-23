@@ -53,4 +53,8 @@ public class PublisherService implements IPublisherService {
     public List<Publisher> getall() {
         return repository.findAll();
     }
+
+    public List<Publisher> findByName(String name) {
+        return repository.findByNameContainingIgnoreCase(name);
+    }
 }

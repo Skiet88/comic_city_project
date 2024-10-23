@@ -73,7 +73,7 @@ import {addBookToCart, getCustomerCart} from "@/services/cartService";
 import {getComicBook} from "@/services/comicBookService";
 
 export default {
-  name: 'ViewItem', // Updated component name
+  name: 'ViewItem',
   components: {
     NavBar,
     FooterSection,
@@ -81,13 +81,13 @@ export default {
   props: {
     wishlist: {
       type: Array,
-      default: () => [] // Ensure default is an empty array
+      default: () => []
     }
   },
   data() {
     return {
 
-      comic: '', // This will store the fetched comic data
+      comic: '',
       quantity: 1,
       activeTab: 'description',
       sku:'',
@@ -122,9 +122,9 @@ export default {
   methods: {
     async fetchComicDetails() {
       this.sku = this.$route.params.sku;
-      console.log(this.sku)// Get the SKU from route parameters
+      console.log(this.sku)
       try {
-        const response = await getComicBook(this.sku); // Fetch the comic details using the SKU
+        const response = await getComicBook(this.sku);
         this.comic = response.data;
       } catch (error) {
         console.error('Failed to fetch comic details:', error);
@@ -219,7 +219,7 @@ export default {
   line-height: 1.6;
 }
 
-/* Form styles */
+
 .form-group {
   margin-bottom: 20px;
 }
@@ -278,7 +278,7 @@ input[type="number"] {
 
 .product-tabs div {
   padding: 20px;
-  //border: 1px solid grey;
+
   border-radius: 4px;
 }
 

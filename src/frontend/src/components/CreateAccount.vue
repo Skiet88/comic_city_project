@@ -39,7 +39,7 @@ import CustomerService from '@/services/CustomerService';
 import {assignCartToCustomer} from "@/services/cartService";
 import {assignWishListToCustomer} from "@/services/wishlistService";
 import SpinnerComponent from "@/components/SpinnerComponent.vue";
-import * as ContactService from "@/services/ContactService"; // Ensure you have this service to handle the API calls
+import * as ContactService from "@/services/ContactService";
 
 export default {
   components:{
@@ -119,7 +119,7 @@ export default {
         this.errorMessage = 'Failed to create account.';
       }
       finally {
-        this.loading = false; // Hide spinner
+        this.loading = false;
       }
     }
   },
@@ -128,7 +128,7 @@ export default {
 
 <style scoped>
 
-/* Disable button when loading */
+
 button[disabled] {
   background-color: #ccc;
   cursor: not-allowed;

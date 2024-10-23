@@ -3,7 +3,7 @@ class ComicBookService {
         this.apiUrl = '/api/comiccity/comic_book'; // Base URL for the API, assuming you're using a proxy
     }
 
-    // Helper method to handle fetch requests
+
     async request(url, options) {
         try {
             const response = await fetch(url, options);

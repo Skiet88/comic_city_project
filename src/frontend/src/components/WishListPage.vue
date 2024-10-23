@@ -18,8 +18,7 @@ export default {
   name: 'WishlistPage',
   methods: {
     browseComics() {
-      // Logic to navigate to the comics browsing page
-      this.$router.push('/comics'); // Updated logic to navigate to the comics page
+      this.$router.push('/comics');
     }
   }
 };
@@ -32,7 +31,7 @@ export default {
 }
 
 .main-content {
-  width: 100%; /* Full-width adjustment */
+  width: 100%;
   padding-left: 20px;
 }
 

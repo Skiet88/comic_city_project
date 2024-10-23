@@ -45,8 +45,8 @@ export default {
 }
 .grid {
   display: flex;
-  justify-content: center; /* Centers the items */
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 10px; /* Adjust this value to control spacing */
+  gap: 10px;
 }
 </style>

@@ -96,4 +96,12 @@ class AuthorServiceTest {
         System.out.println("=============================GET-ALL====================================");
         System.out.println(service.getAll());
     }
+
+    @Test
+    @Order(6)
+    void getAllBynAME() {
+        System.out.println("=============================GET-ALL====================================");
+        System.out.println(service.searchByName("C"));
+    }
+
 }

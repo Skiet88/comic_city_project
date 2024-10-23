@@ -2,10 +2,8 @@
   <div class="table-container">
     <h2>Customer Orders</h2>
 
-    <!-- Filter Section -->
     <div class="filters card p-3 mb-4">
       <div class="row g-3">
-        <!-- Filter by Customer Name -->
         <div class="col-md-4">
           <input
               v-model="searchCustomerName"
@@ -16,7 +14,6 @@
           />
         </div>
 
-        <!-- Filter by Order Date Range -->
         <div class="col-md-3">
           <input
               v-model="startDate"
@@ -41,14 +38,12 @@
       </div>
     </div>
 
-    <!-- Loading and Error Messages -->
     <p v-if="loading" class="loading-message">
       Loading...
       <span class="spinner-border spinner-border-sm"></span>
     </p>
     <p v-if="errorMsg" class="error-message">{{ errorMsg }}</p>
 
-    <!-- Customer Order Table -->
     <table v-if="!loading && customerOrders.length > 0">
       <thead>
       <tr>
@@ -177,7 +172,7 @@ export default {
 </script>
 
 <style scoped>
-/* Original styles for table and components adapted for Customer Orders */
+
 .table-container {
   width: 100%;
   max-width: 1000px;

@@ -84,7 +84,7 @@ const router = createRouter({
     routes,
 });
 
-// Helper function to check if a token is expired
+
 function isTokenExpired(token) {
     try {
         const payload = JSON.parse(atob(token.split('.')[1]));
@@ -95,7 +95,7 @@ function isTokenExpired(token) {
     }
 }
 
-// Global before guard to check authentication and role-based access
+
 router.beforeEach(async (to, from, next) => {
     const requiresAuth = to.meta.requiresAuth;
     const requiredRole = to.meta.role;
