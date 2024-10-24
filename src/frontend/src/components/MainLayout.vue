@@ -28,9 +28,7 @@
           <li class="nav-item">
             <router-link class="nav-link text-light" to="/admin-layout/comic-books">Comic Books</router-link>
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link text-light" to="/admin-layout/view-orders">Orders Management</router-link>
-          </li>
+
           <li class="nav-item">
             <router-link class="nav-link text-light" to="/admin-layout/authors">Authors</router-link>
           </li>
